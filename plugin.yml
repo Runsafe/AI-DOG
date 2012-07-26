@@ -1,0 +1,12 @@
+name: DOG
+main: no.runsafe.dog.Core
+version: 1.0
+author: Kruithne
+description: The almighty DOG
+commands:
+  dogsay:
+    description: Sends a message from DOG
+    usage: /dogsay <message>
+  dogreload:
+    description: Reloads the DOG AI
+    usage: /dogreload

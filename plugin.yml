@@ -1,6 +1,6 @@
 name: DOG
-main: no.runsafe.dog.Core
-version: 1.0
+main: no.runsafe.dog.Plugin
+version: 1.0.1
 author: Kruithne
 description: The almighty DOG
 commands:

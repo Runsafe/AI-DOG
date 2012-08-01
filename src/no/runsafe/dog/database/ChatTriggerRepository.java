@@ -44,7 +44,7 @@ public class ChatTriggerRepository implements ISchemaChanges, IPluginEnabled {
 
 	public String GetResponse(String text) {
 		for(Map.Entry<Pattern, String> triggerEntry : this.triggers.entrySet()) {
-			if(text.toLowerCase().matches(triggerEntry.getKey().pattern())) {
+			if(triggerEntry.getKey().matcher(text).matches()) { // text.toLowerCase().matches(triggerEntry.getKey().pattern())) {
 				return triggerEntry.getValue();
 			}
 		}
@@ -67,7 +67,7 @@ public class ChatTriggerRepository implements ISchemaChanges, IPluginEnabled {
 	}
 
 	private void NewTrigger(String pattern, String text) {
-		Pattern compiledPattern = Pattern.compile(pattern);
+		Pattern compiledPattern = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
 		this.triggers.put(compiledPattern, text);
 	}
 

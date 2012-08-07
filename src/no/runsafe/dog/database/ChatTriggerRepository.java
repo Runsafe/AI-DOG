@@ -13,18 +13,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class ChatTriggerRepository implements ISchemaChanges, IPluginEnabled {
-	public ChatTriggerRepository(IDatabase database) {
+public class ChatTriggerRepository implements ISchemaChanges, IPluginEnabled
+{
+	public ChatTriggerRepository(IDatabase database)
+    {
 		this.database = database;
 	}
 
 	@Override
-	public String getTableName() {
+	public String getTableName()
+    {
 		return "ai_dog";
 	}
 
 	@Override
-	public HashMap<Integer, List<String>> getSchemaUpdateQueries() {
+	public HashMap<Integer, List<String>> getSchemaUpdateQueries()
+    {
 		HashMap<Integer, List<String>> queries = new HashMap<Integer, List<String>>();
 		ArrayList<String> sql = new ArrayList<String>();
 		sql.add(
@@ -38,40 +42,50 @@ public class ChatTriggerRepository implements ISchemaChanges, IPluginEnabled {
 	}
 
 	@Override
-	public void OnPluginEnabled() {
+	public void OnPluginEnabled()
+    {
 		this.GetResponses();
 	}
 
-	public String GetResponse(String text) {
-		for(Map.Entry<Pattern, String> triggerEntry : this.triggers.entrySet()) {
-			if(triggerEntry.getKey().matcher(text).matches()) { // text.toLowerCase().matches(triggerEntry.getKey().pattern())) {
+	public String GetResponse(String text)
+    {
+		for(Map.Entry<Pattern, String> triggerEntry : this.triggers.entrySet())
+        {
+			if(triggerEntry.getKey().matcher(text).matches())
+            {
 				return triggerEntry.getValue();
 			}
 		}
 		return null;
 	}
 
-	public void GetResponses() {
+	public void GetResponses()
+    {
 		this.WipeTriggers();
 		PreparedStatement select = this.database.prepare(
 				"SELECT pattern, reply FROM ai_dog"
 		);
 
-		try {
+		try
+        {
 			ResultSet data = select.executeQuery();
 			while(data.next())
 				this.NewTrigger(data.getString(1), data.getString(2));
-		} catch(SQLException e) {
+		}
+        catch(SQLException e)
+        {
 			e.printStackTrace();
 		}
 	}
 
-	private void NewTrigger(String pattern, String text) {
+	private void NewTrigger(String pattern, String text)
+    {
 		Pattern compiledPattern = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
 		this.triggers.put(compiledPattern, text);
 	}
 
-	private void WipeTriggers() {
+	private void WipeTriggers()
+    {
 		this.triggers = new HashMap<Pattern, String>();
 	}
 

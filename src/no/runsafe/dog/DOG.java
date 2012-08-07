@@ -10,6 +10,7 @@ public class DOG
     {
         this.server = server;
         this.scheduler = scheduler;
+        this.lastResponse = "Docpify should stop refactoring my code.";
     }
 
     public void Say(String message)

@@ -32,7 +32,7 @@ public class ChatResponder implements Runnable, Subsystem, IPlayerChatEvent
 	{
 		this.scheduler = scheduler;
 		this.console = output;
-		this.worker = scheduler.createAsyncTimer(this, 1L, 1L);
+		this.worker = scheduler.createAsyncTimer(this, 10L, 10L);
 		this.config = configuration;
 		this.chatTriggerRepository = repository;
 		this.speech = speechCenter;
@@ -51,6 +51,13 @@ public class ChatResponder implements Runnable, Subsystem, IPlayerChatEvent
 		);
 		ruleCooldown = config.getConfigValueAsInt("autoresponder.cooldown.rule");
 		playerCooldown = config.getConfigValueAsInt("autoresponder.cooldown.player");
+		long delay = config.getConfigValueAsInt("autoresponder.delay");
+		if (delay > 0)
+		{
+			if(this.worker != null)
+				worker.stop();
+			worker = scheduler.createAsyncTimer(this, 10L, delay);
+		}
 	}
 
 	@Override

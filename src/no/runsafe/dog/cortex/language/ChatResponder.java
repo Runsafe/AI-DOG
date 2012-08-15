@@ -128,7 +128,6 @@ public class ChatResponder implements Runnable, Subsystem, IPlayerChatEvent
 		}
 	}
 
-
 	private void pokeWorker()
 	{
 		if (worker == null)

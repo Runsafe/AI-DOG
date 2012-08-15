@@ -7,6 +7,7 @@
       </element>
       <element id="module-output" name="DOG" />
       <element id="file-copy" path="$PROJECT_DIR$/plugin.yml" />
+      <element id="file-copy" path="$PROJECT_DIR$/defaults.yml" />
     </root>
   </artifact>
 </component>

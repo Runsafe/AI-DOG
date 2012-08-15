@@ -1,5 +1,6 @@
 package no.runsafe.dog.cortex.command;
 
+import joptsimple.internal.Strings;
 import no.runsafe.dog.cortex.language.Speech;
 import no.runsafe.framework.command.RunsafeAsyncCommand;
 import no.runsafe.framework.server.player.RunsafePlayer;
@@ -9,7 +10,7 @@ public class SpeakCommand extends RunsafeAsyncCommand
 {
 	public SpeakCommand(Speech speechCenter, IScheduler scheduler)
 	{
-		super("speak", scheduler);
+		super("speak", scheduler, "message");
 		speech = speechCenter;
 	}
 
@@ -22,12 +23,8 @@ public class SpeakCommand extends RunsafeAsyncCommand
 	@Override
 	public String OnExecute(RunsafePlayer executor, String[] args)
 	{
-		if (args.length > 0)
-		{
-			speech.Speak(args[0]);
-			return "DOG has been commanded. Please use AI puppeting sparingly.";
-		}
-		return "Requires 1 argument: message";
+		speech.Speak(Strings.join(args, " "));
+		return "DOG has been commanded. Please use AI puppeting sparingly.";
 	}
 
 	private Speech speech;

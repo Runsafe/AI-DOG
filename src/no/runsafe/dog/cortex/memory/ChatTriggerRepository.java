@@ -55,7 +55,7 @@ public class ChatTriggerRepository implements ISchemaChanges
 			{
 				try
 				{
-					rules.put(Pattern.compile(data.getString("pattern")), data.getString("reply"));
+					rules.put(Pattern.compile(data.getString("pattern"), Pattern.CASE_INSENSITIVE), data.getString("reply"));
 					console.fine("Added pattern '" + data.getString("pattern") + "'");
 				}
 				catch (PatternSyntaxException e)

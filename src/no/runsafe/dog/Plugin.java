@@ -23,13 +23,9 @@ public class Plugin extends RunsafePlugin implements IConfigurationFile
 		this.addComponent(ChatResponder.class);
 
 		ICommand dogCommand = new RunsafeCommand("dog");
-		ICommand speechCommand = new RunsafeCommand("speech");
-		speechCommand.addSubCommand(getInstance(SpeakCommand.class));
-
 		dogCommand.addSubCommand(getInstance(ReloadCommand.class));
-		dogCommand.addSubCommand(speechCommand);
+		dogCommand.addSubCommand(getInstance(SpeakCommand.class));
 		this.addComponent(dogCommand);
-
 	}
 
 	@Override

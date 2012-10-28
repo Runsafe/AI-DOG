@@ -38,8 +38,12 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	@Override
 	public void reload()
 	{
-		activeTriggers.clear();
-		activeTriggers.putAll(chatTriggerRepository.getRules());
+		HashMap<Pattern, String> rules = chatTriggerRepository.getRules();
+		if (rules != null)
+		{
+			activeTriggers.clear();
+			activeTriggers.putAll(rules);
+		}
 		console.outputColoredToConsole(
 			String.format(
 				"Successfully loaded %s%d chat responders%s.",

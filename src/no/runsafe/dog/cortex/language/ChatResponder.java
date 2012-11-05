@@ -21,7 +21,6 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 {
 	public ChatResponder(
 		IScheduler scheduler,
-		IConfiguration configuration,
 		ChatTriggerRepository repository,
 		Speech speechCenter,
 		IOutput output
@@ -30,13 +29,12 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 		super(scheduler);
 		this.scheduler = scheduler;
 		this.console = output;
-		this.config = configuration;
 		this.chatTriggerRepository = repository;
 		this.speech = speechCenter;
 	}
 
 	@Override
-	public void reload()
+	public void reload(IConfiguration config)
 	{
 		HashMap<Pattern, String> rules = chatTriggerRepository.getRules();
 		if (rules != null)
@@ -50,6 +48,8 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 				ChatColor.GREEN, activeTriggers.size(), ChatColor.RESET
 			), Level.INFO
 		);
+		if(config == null)
+			return;
 		ruleCooldown = config.getConfigValueAsInt("autoresponder.cooldown.rule");
 		playerCooldown = config.getConfigValueAsInt("autoresponder.cooldown.player");
 		setInterval(config.getConfigValueAsInt("autoresponder.delay"));
@@ -126,7 +126,6 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	private ChatTriggerRepository chatTriggerRepository;
 	private HashMap<String, Long> playerCooldowns = new HashMap<String, Long>();
 	private HashMap<Pattern, String> activeTriggers = new HashMap<Pattern, String>();
-	private IConfiguration config;
 	private int ruleCooldown;
 	private int playerCooldown;
 	private Speech speech;

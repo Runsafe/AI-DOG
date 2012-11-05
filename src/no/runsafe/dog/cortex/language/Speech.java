@@ -1,6 +1,7 @@
 package no.runsafe.dog.cortex.language;
 
 import no.runsafe.dog.cortex.Subsystem;
+import no.runsafe.framework.configuration.IConfiguration;
 import no.runsafe.framework.server.RunsafeServer;
 import org.bukkit.ChatColor;
 
@@ -12,7 +13,7 @@ public class Speech implements Subsystem
 	}
 
 	@Override
-	public void reload()
+	public void reload(IConfiguration configuration)
 	{
 	}
 

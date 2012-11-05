@@ -1,6 +1,7 @@
 package no.runsafe.dog;
 
 import no.runsafe.dog.cortex.Subsystem;
+import no.runsafe.framework.configuration.IConfiguration;
 import no.runsafe.framework.event.IConfigurationChanged;
 import no.runsafe.framework.event.IPluginEnabled;
 
@@ -12,10 +13,10 @@ public class DogBrain implements IConfigurationChanged
 	}
 
 	@Override
-	public void OnConfigurationChanged()
+	public void OnConfigurationChanged(IConfiguration configuration)
 	{
 		for (Subsystem system : subsystems)
-			system.reload();
+			system.reload(configuration);
 	}
 
 	private Subsystem[] subsystems;

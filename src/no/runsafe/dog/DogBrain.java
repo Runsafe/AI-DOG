@@ -19,5 +19,5 @@ public class DogBrain implements IConfigurationChanged
 			system.reload(configuration);
 	}
 
-	private Subsystem[] subsystems;
+	private final Subsystem[] subsystems;
 }

@@ -27,5 +27,5 @@ public class ReloadCommand extends RunsafeAsyncCommand
 		return "DOG has been reloaded.";
 	}
 
-	private DogBrain dog;
+	private final DogBrain dog;
 }

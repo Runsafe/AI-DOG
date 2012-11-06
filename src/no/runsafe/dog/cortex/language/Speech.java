@@ -22,5 +22,5 @@ public class Speech implements Subsystem
 		this.server.broadcastMessage(ChatColor.BLUE + "[DOG]: " + ChatColor.AQUA + message);
 	}
 
-	private RunsafeServer server;
+	private final RunsafeServer server;
 }

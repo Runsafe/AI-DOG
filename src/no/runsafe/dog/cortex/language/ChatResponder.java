@@ -122,12 +122,12 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 			playerCooldowns.put(player, new Date().getTime() + (playerCooldown * 1000));
 	}
 
-	private IScheduler scheduler;
-	private ChatTriggerRepository chatTriggerRepository;
-	private HashMap<String, Long> playerCooldowns = new HashMap<String, Long>();
-	private HashMap<Pattern, String> activeTriggers = new HashMap<Pattern, String>();
+	private final IScheduler scheduler;
+	private final ChatTriggerRepository chatTriggerRepository;
+	private final HashMap<String, Long> playerCooldowns = new HashMap<String, Long>();
+	private final HashMap<Pattern, String> activeTriggers = new HashMap<Pattern, String>();
 	private int ruleCooldown;
 	private int playerCooldown;
-	private Speech speech;
-	private IOutput console;
+	private final Speech speech;
+	private final IOutput console;
 }

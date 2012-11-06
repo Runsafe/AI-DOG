@@ -24,8 +24,8 @@ public class SpeakCommand extends RunsafeAsyncCommand
 	public String OnExecute(RunsafePlayer executor, String[] args)
 	{
 		speech.Speak(StringUtils.join(args, " "));
-		return "DOG has been commanded. Please use AI puppeting sparingly.";
+		return "DOG has been commanded. Please use AI puppeteering sparingly.";
 	}
 
-	private Speech speech;
+	private final Speech speech;
 }

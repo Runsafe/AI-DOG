@@ -78,6 +78,6 @@ public class ChatTriggerRepository implements ISchemaChanges
 		}
 	}
 
-	private IDatabase database;
-	private IOutput console;
+	private final IDatabase database;
+	private final IOutput console;
 }

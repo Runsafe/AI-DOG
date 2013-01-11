@@ -53,11 +53,14 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 		ruleCooldown = config.getConfigValueAsInt("autoresponder.cooldown.rule");
 		playerCooldown = config.getConfigValueAsInt("autoresponder.cooldown.player");
 		setInterval(config.getConfigValueAsInt("autoresponder.delay"));
+		dogName = config.getConfigValueAsString("name");
 	}
 
 	@Override
 	public void OnPlayerChatEvent(RunsafePlayerChatEvent event)
 	{
+		if(event.getPlayer().getName().equals(dogName))
+			return;
 		console.finer(String.format("Receiving message '%s' from %s", event.getMessage(), event.getPlayer().getName()));
 		Push(event.getPlayer().getName(), event.getMessage());
 	}
@@ -130,4 +133,5 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	private int playerCooldown;
 	private final Speech speech;
 	private final IOutput console;
+	private String dogName;
 }

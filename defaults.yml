@@ -1,3 +1,6 @@
 autoresponder.delay: 10
 autoresponder.cooldown.rule: 30
 autoresponder.cooldown.player: 0
+name: DOG
+group: Superuser
+world: world_nether

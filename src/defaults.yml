@@ -4,7 +4,7 @@ autoresponder.cooldown.player: 0
 name: DOG
 group: Superuser
 world: world_nether
-whisper: %1$s &7-> &f%2$s
+whisper: "%1$s &7-> &f%2$s"
 messages.blocked:
   world: Hello there, you seem to want to play Survival! Please contact a member of staff and ask to become a builder to proceed.
   world_nether: Hello there, you seem to want to play Survival! Please contact a member of staff and ask to become a builder to proceed.

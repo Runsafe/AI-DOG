@@ -10,6 +10,7 @@ import no.runsafe.framework.timer.IScheduler;
 import no.runsafe.framework.timer.Worker;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,7 +21,8 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 		IScheduler scheduler,
 		ChatTriggerRepository repository,
 		Speech speechCenter,
-		IOutput output
+		IOutput output,
+		ChatResponderRule[] responders
 	)
 	{
 		super(scheduler);
@@ -28,6 +30,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 		this.console = output;
 		this.chatTriggerRepository = repository;
 		this.speech = speechCenter;
+		this.staticResponders = responders;
 	}
 
 	@Override
@@ -38,7 +41,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 		{
 			activeTriggers.clear();
 			activeTriggers.addAll(rules);
-//			activeTriggers.putAll(rules);
+			Collections.addAll(activeTriggers, staticResponders);
 		}
 		console.writeColoured(
 			"Successfully loaded &a%d chat responders&r.",
@@ -68,16 +71,12 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 
 		if (isPlayerOffCooldown(player))
 			for (ChatResponderRule rule : activeTriggers.toArray(new ChatResponderRule[activeTriggers.size()]))
-			//for (Map.Entry<Pattern, String> rule : activeTriggers.entrySet())
 			{
 				String response = rule.getResponse(player, message);
 				if (response != null)
-//				Matcher matcher = rule.getKey().matcher(message);
-//				if (matcher.matches())
 				{
 					applyRuleCooldown(rule);
 					applyPlayerCooldown(player);
-//					String response = matcher.replaceAll(rule.getValue().replace("%player%", player));
 					console.fine(String.format("Sending response '%s'", response));
 					speech.Speak(response);
 					break;
@@ -103,8 +102,6 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 		if (ruleCooldown > 0)
 		{
 			console.fine("Putting rule on cooldown");
-//			final Pattern pattern = rule.getKey();
-//			final String response = rule.getValue();
 			Runnable callback = new Runnable()
 			{
 				@Override
@@ -113,7 +110,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 					activeTriggers.add(rule);
 				}
 			};
-			activeTriggers.remove(rule); //.getKey());
+			activeTriggers.remove(rule);
 			scheduler.createAsyncTimer(callback, ruleCooldown);
 		}
 	}
@@ -132,5 +129,6 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	private int playerCooldown;
 	private final Speech speech;
 	private final IOutput console;
+	private final ChatResponderRule[] staticResponders;
 	private String dogName;
 }

@@ -9,10 +9,20 @@ public class ChatResponderRule
 {
 	public ChatResponderRule(String pattern, String response, String alternate, String alternatePermission)
 	{
-		this.rule = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
-		this.response = response;
-		this.alternate = alternate;
-		this.alternatePermission = alternatePermission;
+		if (pattern == null)
+		{
+			this.rule = null;
+			this.response = null;
+			this.alternate = null;
+			this.alternatePermission = null;
+		}
+		else
+		{
+			this.rule = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
+			this.response = response;
+			this.alternate = alternate;
+			this.alternatePermission = alternatePermission;
+		}
 	}
 
 	public String getResponse(String player, String message)

@@ -3,7 +3,6 @@ package no.runsafe.dog.cortex.memory;
 import no.runsafe.framework.database.IDatabase;
 import no.runsafe.framework.database.ISchemaChanges;
 import no.runsafe.framework.output.IOutput;
-import org.bukkit.ChatColor;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -60,12 +59,10 @@ public class ChatTriggerRepository implements ISchemaChanges
 				}
 				catch (PatternSyntaxException e)
 				{
-					console.outputColoredToConsole(
-						String.format(
-							"Invalid regular expression '%1$s%4$s%3$s' - %2$s%5$s%3$s",
-							ChatColor.YELLOW, ChatColor.RED, ChatColor.RESET, e.getPattern(), e.getDescription()
-						),
-						Level.WARNING
+					console.writeColoured(
+						"Invalid regular expression '&e%1$s&r' - &c%2$s&r",
+						Level.WARNING,
+						e.getPattern(), e.getDescription()
 					);
 				}
 			}

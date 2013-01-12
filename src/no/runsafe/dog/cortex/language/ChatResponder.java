@@ -8,12 +8,10 @@ import no.runsafe.framework.output.IOutput;
 import no.runsafe.framework.server.event.player.RunsafePlayerChatEvent;
 import no.runsafe.framework.timer.IScheduler;
 import no.runsafe.framework.timer.Worker;
-import org.bukkit.ChatColor;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,13 +40,11 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 			activeTriggers.clear();
 			activeTriggers.putAll(rules);
 		}
-		console.outputColoredToConsole(
-			String.format(
-				"Successfully loaded %s%d chat responders%s.",
-				ChatColor.GREEN, activeTriggers.size(), ChatColor.RESET
-			), Level.INFO
+		console.writeColoured(
+			"Successfully loaded &a%d chat responders&r.",
+			activeTriggers.size()
 		);
-		if(config == null)
+		if (config == null)
 			return;
 		ruleCooldown = config.getConfigValueAsInt("autoresponder.cooldown.rule");
 		playerCooldown = config.getConfigValueAsInt("autoresponder.cooldown.player");
@@ -59,7 +55,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	@Override
 	public void OnPlayerChatEvent(RunsafePlayerChatEvent event)
 	{
-		if(event.getPlayer().getName().equals(dogName))
+		if (event.getPlayer().getName().equals(dogName))
 			return;
 		console.finer(String.format("Receiving message '%s' from %s", event.getMessage(), event.getPlayer().getName()));
 		Push(event.getPlayer().getName(), event.getMessage());

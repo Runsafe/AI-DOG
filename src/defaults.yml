@@ -4,3 +4,9 @@ autoresponder.cooldown.player: 0
 name: DOG
 group: Superuser
 world: world_nether
+whisper: %1$s &7-> &f%2$s
+messages.blocked:
+  world: Hello there, you seem to want to play Survival! Please contact a member of staff and ask to become a builder to proceed.
+  world_nether: Hello there, you seem to want to play Survival! Please contact a member of staff and ask to become a builder to proceed.
+  world_the_end: Hello there, you seem to want to play Survival! Please contact a member of staff and ask to become a builder to proceed.
+  world_creative: Hello there, you seem to want to play Creative! Please find a free plot and ask a member of staff if you can have it.

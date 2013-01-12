@@ -49,7 +49,7 @@ public class ChatTriggerRepository implements ISchemaChanges
 
 	public List<ChatResponderRule> getRules()
 	{
-		PreparedStatement select = this.database.prepare("SELECT * FROM ai_dog");
+		PreparedStatement select = this.database.prepare("SELECT pattern,reply,alternate,alternate_permission FROM ai_dog");
 		try
 		{
 			ResultSet data = select.executeQuery();
@@ -59,10 +59,10 @@ public class ChatTriggerRepository implements ISchemaChanges
 				try
 				{
 					rules.add(new ChatResponderRule(
-						data.getString("pattern"),
-						data.getString("reply"),
-						data.getString("alternate"),
-						data.getString("alternate_permission")
+						data.getString(0),
+						data.getString(1),
+						data.getString(2),
+						data.getString(3)
 					));
 					console.fine("Added pattern '" + data.getString("pattern") + "'");
 				}

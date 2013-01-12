@@ -23,7 +23,7 @@ public class Seen extends ChatResponderRule
 		Matcher results = question.matcher(message);
 		if (results.matches())
 		{
-			RunsafePlayer who = RunsafeServer.Instance.getPlayer(results.group(1));
+			RunsafePlayer who = RunsafeServer.Instance.getPlayer(results.group(2));
 			if (who != null && !(who instanceof RunsafeAmbiguousPlayer))
 			{
 				ICommand command = getSeenCommand();
@@ -40,5 +40,5 @@ public class Seen extends ChatResponderRule
 		return RunsafePlugin.getPluginCommand("seen");
 	}
 
-	private static final Pattern question = Pattern.compile("(has|have|when).*seen ([\\w]+)");
+	private static final Pattern question = Pattern.compile(".*(has|have|when).*seen ([a-z0-9_-]+)");
 }

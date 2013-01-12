@@ -5,7 +5,6 @@ import no.runsafe.dog.cortex.language.Speech;
 import no.runsafe.dog.cortex.reason.PlayerChecks;
 import no.runsafe.framework.configuration.IConfiguration;
 import no.runsafe.framework.event.player.IPlayerInteractEvent;
-import no.runsafe.framework.output.IOutput;
 import no.runsafe.framework.server.event.player.RunsafePlayerInteractEvent;
 import no.runsafe.framework.server.player.RunsafePlayer;
 import org.bukkit.configuration.ConfigurationSection;
@@ -35,17 +34,17 @@ public class Observer implements Subsystem, IPlayerInteractEvent
 	public void OnPlayerInteractEvent(RunsafePlayerInteractEvent event)
 	{
 		RunsafePlayer player = event.getPlayer();
-		if (playerChecks.isGuest(player) && !wasNotified(player))
+		if (playerChecks.isGuest(player) && shouldNotify(player))
 		{
 			speech.Whisper(player, blockedMessages.get(player.getWorld().getName()));
 			isNotified(player);
 		}
 	}
 
-	private boolean wasNotified(RunsafePlayer player)
+	private boolean shouldNotify(RunsafePlayer player)
 	{
-		return notifiedPlayers.containsKey(player.getWorld().getName())
-			&& notifiedPlayers.get(player.getWorld().getName()).contains(player.getName());
+		return !notifiedPlayers.containsKey(player.getWorld().getName())
+			|| !notifiedPlayers.get(player.getWorld().getName()).contains(player.getName());
 	}
 
 	private void isNotified(RunsafePlayer player)
@@ -56,8 +55,8 @@ public class Observer implements Subsystem, IPlayerInteractEvent
 			notifiedPlayers.get(player.getWorld().getName()).add(player.getName());
 	}
 
-	private PlayerChecks playerChecks;
-	private Speech speech;
+	private final PlayerChecks playerChecks;
+	private final Speech speech;
 	private final HashMap<String, String> blockedMessages;
 	private final HashMap<String, ArrayList<String>> notifiedPlayers = new HashMap<String, ArrayList<String>>();
 }

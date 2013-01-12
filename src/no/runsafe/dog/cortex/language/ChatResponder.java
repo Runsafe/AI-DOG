@@ -66,7 +66,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	{
 		console.finer(String.format("Checking message '%s' from '%s'", message, player));
 
-		if (!isPlayerCooldown(player))
+		if (isPlayerOffCooldown(player))
 			for (ChatResponderRule rule : activeTriggers.toArray(new ChatResponderRule[activeTriggers.size()]))
 			//for (Map.Entry<Pattern, String> rule : activeTriggers.entrySet())
 			{
@@ -85,7 +85,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 			}
 	}
 
-	private boolean isPlayerCooldown(String player)
+	private boolean isPlayerOffCooldown(String player)
 	{
 		if (playerCooldown > 0 && playerCooldowns.containsKey(player))
 		{
@@ -93,9 +93,9 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 			if (playerCooldowns.get(player) < new Date().getTime())
 				playerCooldowns.remove(player);
 			else
-				return true;
+				return false;
 		}
-		return false;
+		return true;
 	}
 
 	private void applyRuleCooldown(final ChatResponderRule rule)

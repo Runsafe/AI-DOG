@@ -6,16 +6,18 @@ import no.runsafe.dog.cortex.reason.PlayerChecks;
 import no.runsafe.framework.configuration.IConfiguration;
 import no.runsafe.framework.event.block.IBlockBreakEvent;
 import no.runsafe.framework.event.block.IBlockPlaceEvent;
+import no.runsafe.framework.event.player.IPlayerInteractEvent;
 import no.runsafe.framework.output.IOutput;
 import no.runsafe.framework.server.event.block.RunsafeBlockBreakEvent;
 import no.runsafe.framework.server.event.block.RunsafeBlockPlaceEvent;
+import no.runsafe.framework.server.event.player.RunsafePlayerInteractEvent;
 import no.runsafe.framework.server.player.RunsafePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Observer implements Subsystem, IBlockBreakEvent, IBlockPlaceEvent
+public class Observer implements Subsystem, IPlayerInteractEvent
 {
 	public Observer(PlayerChecks playerChecks, Speech speech, IOutput output)
 	{
@@ -35,23 +37,9 @@ public class Observer implements Subsystem, IBlockBreakEvent, IBlockPlaceEvent
 	}
 
 	@Override
-	public void OnBlockBreakEvent(RunsafeBlockBreakEvent event)
+	public void OnPlayerInteractEvent(RunsafePlayerInteractEvent event)
 	{
-		console.writeColoured("Got block break event from %s", event.getPlayer().getPrettyName());
-		if (event.getCancelled())
-			OnBlockedBuilderEvent(event.getPlayer());
-	}
-
-	@Override
-	public void OnBlockPlaceEvent(RunsafeBlockPlaceEvent event)
-	{
-		console.writeColoured("Got block place event from %s", event.getPlayer().getPrettyName());
-		if (event.getCancelled())
-			OnBlockedBuilderEvent(event.getPlayer());
-	}
-
-	private void OnBlockedBuilderEvent(RunsafePlayer player)
-	{
+		RunsafePlayer player = event.getPlayer();
 		console.writeColoured("Checking blocked builder event from %s in %s", player.getPrettyName(), player.getWorld().getName());
 		if (playerChecks.isGuest(player) && !wasNotified(player))
 		{

@@ -2,6 +2,7 @@ package no.runsafe.dog.cortex.language;
 
 import no.runsafe.dog.cortex.Subsystem;
 import no.runsafe.framework.configuration.IConfiguration;
+import no.runsafe.framework.output.IOutput;
 import no.runsafe.framework.server.RunsafeServer;
 import no.runsafe.framework.server.event.player.RunsafePlayerFakeChatEvent;
 import no.runsafe.framework.server.player.RunsafeFakePlayer;

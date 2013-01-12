@@ -9,11 +9,10 @@ import no.runsafe.framework.server.event.player.RunsafePlayerChatEvent;
 import no.runsafe.framework.timer.IScheduler;
 import no.runsafe.framework.timer.Worker;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ChatResponder extends Worker<String, String> implements Runnable, Subsystem, IPlayerChatEvent
 {
@@ -34,11 +33,12 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	@Override
 	public void reload(IConfiguration config)
 	{
-		HashMap<Pattern, String> rules = chatTriggerRepository.getRules();
+		List<ChatResponderRule> rules = chatTriggerRepository.getRules();
 		if (rules != null)
 		{
 			activeTriggers.clear();
-			activeTriggers.putAll(rules);
+			activeTriggers.addAll(rules);
+//			activeTriggers.putAll(rules);
 		}
 		console.writeColoured(
 			"Successfully loaded &a%d chat responders&r.",
@@ -67,14 +67,17 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 		console.finer(String.format("Checking message '%s' from '%s'", message, player));
 
 		if (!isPlayerCooldown(player))
-			for (Map.Entry<Pattern, String> rule : activeTriggers.entrySet())
+			for (ChatResponderRule rule : activeTriggers.toArray(new ChatResponderRule[activeTriggers.size()]))
+			//for (Map.Entry<Pattern, String> rule : activeTriggers.entrySet())
 			{
-				Matcher matcher = rule.getKey().matcher(message);
-				if (matcher.matches())
+				String response = rule.getResponse(player, message);
+				if (response != null)
+//				Matcher matcher = rule.getKey().matcher(message);
+//				if (matcher.matches())
 				{
 					applyRuleCooldown(rule);
 					applyPlayerCooldown(player);
-					String response = matcher.replaceAll(rule.getValue().replace("%player%", player));
+//					String response = matcher.replaceAll(rule.getValue().replace("%player%", player));
 					console.fine(String.format("Sending response '%s'", response));
 					speech.Speak(response);
 					break;
@@ -95,22 +98,22 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 		return false;
 	}
 
-	private void applyRuleCooldown(Map.Entry<Pattern, String> rule)
+	private void applyRuleCooldown(final ChatResponderRule rule)
 	{
 		if (ruleCooldown > 0)
 		{
 			console.fine("Putting rule on cooldown");
-			final Pattern pattern = rule.getKey();
-			final String response = rule.getValue();
+//			final Pattern pattern = rule.getKey();
+//			final String response = rule.getValue();
 			Runnable callback = new Runnable()
 			{
 				@Override
 				public void run()
 				{
-					activeTriggers.put(pattern, response);
+					activeTriggers.add(rule);
 				}
 			};
-			activeTriggers.remove(rule.getKey());
+			activeTriggers.remove(rule); //.getKey());
 			scheduler.createAsyncTimer(callback, ruleCooldown);
 		}
 	}
@@ -123,8 +126,8 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 
 	private final IScheduler scheduler;
 	private final ChatTriggerRepository chatTriggerRepository;
-	private final HashMap<String, Long> playerCooldowns = new HashMap<String, Long>();
-	private final HashMap<Pattern, String> activeTriggers = new HashMap<Pattern, String>();
+	private final ConcurrentHashMap<String, Long> playerCooldowns = new ConcurrentHashMap<String, Long>();
+	private final ArrayList<ChatResponderRule> activeTriggers = new ArrayList<ChatResponderRule>();
 	private int ruleCooldown;
 	private int playerCooldown;
 	private final Speech speech;

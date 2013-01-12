@@ -1,5 +1,6 @@
 package no.runsafe.dog.cortex.memory;
 
+import no.runsafe.dog.cortex.language.ChatResponderRule;
 import no.runsafe.framework.database.IDatabase;
 import no.runsafe.framework.database.ISchemaChanges;
 import no.runsafe.framework.output.IOutput;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public class ChatTriggerRepository implements ISchemaChanges
@@ -40,21 +40,30 @@ public class ChatTriggerRepository implements ISchemaChanges
 				")"
 		);
 		queries.put(1, sql);
+		sql = new ArrayList<String>();
+		sql.add("ALTER TABLE ai_dog ADD COLUMN alternate varchar(255) NULL");
+		sql.add("ALTER TABLE ai_dog ADD COLUMN alternate_permission varchar(255) NULL");
+		queries.put(2, sql);
 		return queries;
 	}
 
-	public HashMap<Pattern, String> getRules()
+	public List<ChatResponderRule> getRules()
 	{
 		PreparedStatement select = this.database.prepare("SELECT * FROM ai_dog");
 		try
 		{
 			ResultSet data = select.executeQuery();
-			HashMap<Pattern, String> rules = new HashMap<Pattern, String>();
+			ArrayList<ChatResponderRule> rules = new ArrayList<ChatResponderRule>();
 			while (data.next())
 			{
 				try
 				{
-					rules.put(Pattern.compile(data.getString("pattern"), Pattern.CASE_INSENSITIVE), data.getString("reply"));
+					rules.add(new ChatResponderRule(
+						data.getString("pattern"),
+						data.getString("reply"),
+						data.getString("alternate"),
+						data.getString("alternate_permission")
+					));
 					console.fine("Added pattern '" + data.getString("pattern") + "'");
 				}
 				catch (PatternSyntaxException e)

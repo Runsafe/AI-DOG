@@ -4,12 +4,8 @@ import no.runsafe.dog.cortex.Subsystem;
 import no.runsafe.dog.cortex.language.Speech;
 import no.runsafe.dog.cortex.reason.PlayerChecks;
 import no.runsafe.framework.configuration.IConfiguration;
-import no.runsafe.framework.event.block.IBlockBreakEvent;
-import no.runsafe.framework.event.block.IBlockPlaceEvent;
 import no.runsafe.framework.event.player.IPlayerInteractEvent;
 import no.runsafe.framework.output.IOutput;
-import no.runsafe.framework.server.event.block.RunsafeBlockBreakEvent;
-import no.runsafe.framework.server.event.block.RunsafeBlockPlaceEvent;
 import no.runsafe.framework.server.event.player.RunsafePlayerInteractEvent;
 import no.runsafe.framework.server.player.RunsafePlayer;
 import org.bukkit.configuration.ConfigurationSection;
@@ -19,12 +15,11 @@ import java.util.HashMap;
 
 public class Observer implements Subsystem, IPlayerInteractEvent
 {
-	public Observer(PlayerChecks playerChecks, Speech speech, IOutput output)
+	public Observer(PlayerChecks playerChecks, Speech speech)
 	{
 		this.speech = speech;
 		this.playerChecks = playerChecks;
 		blockedMessages = new HashMap<String, String>();
-		console = output;
 	}
 
 	@Override
@@ -40,25 +35,21 @@ public class Observer implements Subsystem, IPlayerInteractEvent
 	public void OnPlayerInteractEvent(RunsafePlayerInteractEvent event)
 	{
 		RunsafePlayer player = event.getPlayer();
-		console.writeColoured("Checking blocked builder event from %s in %s", player.getPrettyName(), player.getWorld().getName());
 		if (playerChecks.isGuest(player) && !wasNotified(player))
 		{
-			console.writeColoured("Sending message to %s", player.getPrettyName());
-				speech.Whisper(player, blockedMessages.get(player.getWorld().getName()));
+			speech.Whisper(player, blockedMessages.get(player.getWorld().getName()));
 			isNotified(player);
 		}
 	}
 
 	private boolean wasNotified(RunsafePlayer player)
 	{
-		console.writeColoured("Checking notified status for %s in %s", player.getPrettyName(), player.getWorld().getName());
 		return notifiedPlayers.containsKey(player.getWorld().getName())
 			&& notifiedPlayers.get(player.getWorld().getName()).contains(player.getName());
 	}
 
 	private void isNotified(RunsafePlayer player)
 	{
-		console.writeColoured("Setting notified status for %s in %s", player.getPrettyName(), player.getWorld().getName());
 		if (!notifiedPlayers.containsKey(player.getWorld().getName()))
 			notifiedPlayers.put(player.getWorld().getName(), new ArrayList<String>());
 		if (!notifiedPlayers.get(player.getWorld().getName()).contains(player.getName()))
@@ -69,5 +60,4 @@ public class Observer implements Subsystem, IPlayerInteractEvent
 	private Speech speech;
 	private final HashMap<String, String> blockedMessages;
 	private final HashMap<String, ArrayList<String>> notifiedPlayers = new HashMap<String, ArrayList<String>>();
-	private final IOutput console;
 }

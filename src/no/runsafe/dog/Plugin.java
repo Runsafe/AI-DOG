@@ -5,6 +5,7 @@ import no.runsafe.dog.cortex.command.SpeakCommand;
 import no.runsafe.dog.cortex.language.ChatResponder;
 import no.runsafe.dog.cortex.language.Speech;
 import no.runsafe.dog.cortex.memory.ChatTriggerRepository;
+import no.runsafe.dog.cortex.visual.Observer;
 import no.runsafe.framework.RunsafeConfigurablePlugin;
 import no.runsafe.framework.RunsafePlugin;
 import no.runsafe.framework.command.ICommand;
@@ -22,6 +23,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(ChatTriggerRepository.class);
 		this.addComponent(Speech.class);
 		this.addComponent(ChatResponder.class);
+		this.addComponent(Observer.class);
 
 		ICommand dogCommand = new RunsafeCommand("dog");
 		dogCommand.addSubCommand(getInstance(ReloadCommand.class));

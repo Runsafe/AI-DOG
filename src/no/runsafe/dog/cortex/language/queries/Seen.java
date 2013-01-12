@@ -40,5 +40,5 @@ public class Seen extends ChatResponderRule
 		return RunsafePlugin.getPluginCommand("seen");
 	}
 
-	private static final Pattern question = Pattern.compile(".*(has|have|when).*seen ([a-z0-9_-]+)");
+	private static final Pattern question = Pattern.compile(".*(has.*seen|have.*seen|when.*was) ([a-z0-9_-]+).*");
 }

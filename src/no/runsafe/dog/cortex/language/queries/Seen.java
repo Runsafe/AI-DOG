@@ -23,7 +23,7 @@ public class Seen extends ChatResponderRule
 		Matcher results = question.matcher(message);
 		if (results.matches())
 		{
-			RunsafePlayer who = RunsafeServer.Instance.getPlayer(results.group(2));
+			RunsafePlayer who = RunsafeServer.Instance.getPlayer(results.group(2).toLowerCase());
 			if (who != null && !(who instanceof RunsafeAmbiguousPlayer))
 			{
 				ICommand command = getSeenCommand();

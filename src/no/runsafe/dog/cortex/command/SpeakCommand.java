@@ -1,31 +1,30 @@
 package no.runsafe.dog.cortex.command;
 
 import no.runsafe.dog.cortex.language.Speech;
-import no.runsafe.framework.command.RunsafeAsyncCommand;
-import no.runsafe.framework.server.player.RunsafePlayer;
-import no.runsafe.framework.timer.IScheduler;
+import no.runsafe.framework.command.ExecutableCommand;
+import no.runsafe.framework.server.ICommandExecutor;
 import org.apache.commons.lang.StringUtils;
 
-public class SpeakCommand extends RunsafeAsyncCommand
+import java.util.HashMap;
+
+public class SpeakCommand extends ExecutableCommand
 {
-	public SpeakCommand(Speech speechCenter, IScheduler scheduler)
+	public SpeakCommand(Speech speechCenter)
 	{
-		super("speak", scheduler, "message");
+		super("speak", "Command DOG to say something clever", "runsafe.dog.speak", "message");
 		speech = speechCenter;
 	}
 
 	@Override
-	public String requiredPermission()
+	public String OnExecute(ICommandExecutor executor, HashMap<String, String> parameters, String[] arguments)
 	{
-		return "runsafe.dog.speak";
-	}
-
-	@Override
-	public String OnExecute(RunsafePlayer executor, String[] args)
-	{
-		speech.Speak(StringUtils.join(args, " "));
+		String message = parameters.get("message");
+		if (arguments.length > 0)
+			message += " " + StringUtils.join(arguments, " ");
+		speech.Speak(message);
 		return "DOG has been commanded. Please use AI puppeteering sparingly.";
 	}
 
 	private final Speech speech;
+
 }

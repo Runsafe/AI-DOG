@@ -1,27 +1,22 @@
 package no.runsafe.dog.cortex.command;
 
 import no.runsafe.dog.DogBrain;
-import no.runsafe.dog.Plugin;
-import no.runsafe.framework.command.RunsafeAsyncCommand;
-import no.runsafe.framework.server.player.RunsafePlayer;
+import no.runsafe.framework.command.AsyncCommand;
+import no.runsafe.framework.server.ICommandExecutor;
 import no.runsafe.framework.timer.IScheduler;
 
-public class ReloadCommand extends RunsafeAsyncCommand
+import java.util.HashMap;
+
+public class ReloadCommand extends AsyncCommand
 {
 	public ReloadCommand(DogBrain dog, IScheduler scheduler)
 	{
-		super("reload", scheduler);
+		super("reload", "Triggers a reload of DOG responders.", "runsafe.dog.reload", scheduler);
 		this.dog = dog;
 	}
 
 	@Override
-	public String requiredPermission()
-	{
-		return "runsafe.dog.reload";
-	}
-
-	@Override
-	public String OnExecute(RunsafePlayer executor, String[] args)
+	public String OnAsyncExecute(ICommandExecutor executor, HashMap<String, String> parameters, String[] arguments)
 	{
 		dog.OnConfigurationChanged(null);
 		return "DOG has been reloaded.";

@@ -24,6 +24,8 @@ public class Observer implements Subsystem, IPlayerInteractEvent
 	@Override
 	public void reload(IConfiguration configuration)
 	{
+		if (configuration == null)
+			return;
 		ConfigurationSection blockedMessages = configuration.getSection("messages.blocked");
 		this.blockedMessages.clear();
 		for (String world : blockedMessages.getKeys(false))

@@ -9,12 +9,7 @@ import no.runsafe.dog.cortex.memory.ChatTriggerRepository;
 import no.runsafe.dog.cortex.reason.PlayerChecks;
 import no.runsafe.dog.cortex.visual.Observer;
 import no.runsafe.framework.RunsafeConfigurablePlugin;
-import no.runsafe.framework.RunsafePlugin;
-import no.runsafe.framework.command.ICommand;
-import no.runsafe.framework.command.RunsafeCommand;
-import no.runsafe.framework.configuration.IConfigurationFile;
-
-import java.io.InputStream;
+import no.runsafe.framework.command.Command;
 
 public class Plugin extends RunsafeConfigurablePlugin
 {
@@ -29,7 +24,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(Observer.class);
 		this.addComponent(Seen.class);
 
-		ICommand dogCommand = new RunsafeCommand("dog");
+		Command dogCommand = new Command("dog", "Commands to control DOG", null);
 		dogCommand.addSubCommand(getInstance(ReloadCommand.class));
 		dogCommand.addSubCommand(getInstance(SpeakCommand.class));
 		this.addComponent(dogCommand);

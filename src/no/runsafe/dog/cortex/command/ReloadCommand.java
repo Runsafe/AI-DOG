@@ -16,7 +16,7 @@ public class ReloadCommand extends AsyncCommand
 	}
 
 	@Override
-	public String OnAsyncExecute(ICommandExecutor executor, HashMap<String, String> parameters, String[] arguments)
+	public String OnAsyncExecute(ICommandExecutor executor, HashMap<String, String> parameters)
 	{
 		dog.OnConfigurationChanged(null);
 		return "DOG has been reloaded.";

@@ -3,6 +3,8 @@ package no.runsafe.dog.cortex.language.queries;
 import no.runsafe.dog.cortex.language.ChatResponderRule;
 import no.runsafe.framework.RunsafePlugin;
 import no.runsafe.framework.command.ICommandHandler;
+import no.runsafe.framework.command.prepared.IPreparedCommand;
+import no.runsafe.framework.command.prepared.PreparedAsynchronousCommand;
 import no.runsafe.framework.server.RunsafeServer;
 import no.runsafe.framework.server.player.RunsafeAmbiguousPlayer;
 import no.runsafe.framework.server.player.RunsafePlayer;
@@ -29,7 +31,12 @@ public class Seen extends ChatResponderRule
 				ICommandHandler command = getSeenCommand();
 				if (command == null)
 					return null;
-				return command.prepare(RunsafeServer.Instance.getPlayerExact(player), new String[]{who.getName()}).execute();
+
+				IPreparedCommand seen = command.prepare(RunsafeServer.Instance.getPlayerExact(player), new String[]{who.getName()});
+				if (seen instanceof PreparedAsynchronousCommand)
+					return ((PreparedAsynchronousCommand) seen).executeDirect();
+				else
+					return seen.execute();
 			}
 		}
 		return null;

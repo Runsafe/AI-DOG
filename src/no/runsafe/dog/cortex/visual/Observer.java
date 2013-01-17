@@ -7,7 +7,6 @@ import no.runsafe.framework.configuration.IConfiguration;
 import no.runsafe.framework.event.player.IPlayerInteractEvent;
 import no.runsafe.framework.server.event.player.RunsafePlayerInteractEvent;
 import no.runsafe.framework.server.player.RunsafePlayer;
-import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,10 +25,8 @@ public class Observer implements Subsystem, IPlayerInteractEvent
 	{
 		if (configuration == null)
 			return;
-		ConfigurationSection blockedMessages = configuration.getSection("messages.blocked");
-		this.blockedMessages.clear();
-		for (String world : blockedMessages.getKeys(false))
-			this.blockedMessages.put(world, blockedMessages.getString(world));
+		blockedMessages.clear();
+		blockedMessages.putAll(configuration.getConfigValuesAsMap("messages.blocked"));
 	}
 
 	@Override

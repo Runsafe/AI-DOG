@@ -8,6 +8,7 @@ import no.runsafe.dog.cortex.language.queries.Seen;
 import no.runsafe.dog.cortex.memory.ChatTriggerRepository;
 import no.runsafe.dog.cortex.reason.PlayerChecks;
 import no.runsafe.dog.cortex.visual.Observer;
+import no.runsafe.dog.events.PlayerLogin;
 import no.runsafe.framework.RunsafeConfigurablePlugin;
 import no.runsafe.framework.command.Command;
 
@@ -23,6 +24,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(PlayerChecks.class);
 		this.addComponent(Observer.class);
 		this.addComponent(Seen.class);
+		this.addComponent(PlayerLogin.class);
 
 		Command dogCommand = new Command("dog", "Commands to control DOG", null);
 		dogCommand.addSubCommand(getInstance(ReloadCommand.class));

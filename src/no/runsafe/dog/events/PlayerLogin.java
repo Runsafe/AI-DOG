@@ -19,7 +19,7 @@ public class PlayerLogin implements IPlayerPreLoginEvent
 		String playerName = event.getPlayer().getName();
 		RunsafePlayer player = RunsafeServer.Instance.getPlayer(playerName);
 
-		if (player == null)
+		if (player.isNew())
 			speechCenter.Speak("Welcome to the server, " + playerName);
 	}
 

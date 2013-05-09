@@ -4,6 +4,7 @@ import no.runsafe.dog.cortex.command.ReloadCommand;
 import no.runsafe.dog.cortex.command.SpeakCommand;
 import no.runsafe.dog.cortex.language.ChatResponder;
 import no.runsafe.dog.cortex.language.Speech;
+import no.runsafe.dog.cortex.language.queries.Calculate;
 import no.runsafe.dog.cortex.language.queries.Seen;
 import no.runsafe.dog.cortex.memory.ChatTriggerRepository;
 import no.runsafe.dog.cortex.reason.PlayerChecks;
@@ -24,6 +25,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(PlayerChecks.class);
 		this.addComponent(Observer.class);
 		this.addComponent(Seen.class);
+		this.addComponent(Calculate.class);
 		this.addComponent(PlayerLogin.class);
 
 		Command dogCommand = new Command("dog", "Commands to control DOG", null);

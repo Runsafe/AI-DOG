@@ -7,15 +7,17 @@ import no.runsafe.framework.server.RunsafeServer;
 import no.runsafe.framework.server.event.player.RunsafePlayerJoinEvent;
 import no.runsafe.framework.server.event.player.RunsafePlayerPreLoginEvent;
 import no.runsafe.framework.server.player.RunsafePlayer;
+import no.runsafe.framework.timer.IScheduler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerLogin implements IPlayerPreLoginEvent, IPlayerJoinEvent
 {
-	public PlayerLogin(Speech speechCenter)
+	public PlayerLogin(Speech speechCenter, IScheduler scheduler)
 	{
 		this.speechCenter = speechCenter;
+		this.scheduler = scheduler;
 	}
 
 	@Override
@@ -31,14 +33,24 @@ public class PlayerLogin implements IPlayerPreLoginEvent, IPlayerJoinEvent
 	@Override
 	public void OnPlayerJoinEvent(RunsafePlayerJoinEvent event)
 	{
-		String playerName = event.getPlayer().getName();
+		final String playerName = event.getPlayer().getName();
 		if (this.playersToWelcome.contains(playerName))
-		{
-			this.speechCenter.Speak(String.format("Welcome to the server, %s.", playerName));
-			this.playersToWelcome.remove(playerName);
-		}
+			this.scheduler.startSyncTask(new Runnable() {
+				@Override
+				public void run()
+				{
+					welcomePlayer(playerName);
+				}
+			}, 2);
+	}
+
+	private void welcomePlayer(String playerName)
+	{
+		this.speechCenter.Speak(String.format("Welcome to the server, %s.", playerName));
+		this.playersToWelcome.remove(playerName);
 	}
 
 	private Speech speechCenter;
 	private List<String> playersToWelcome = new ArrayList<String>();
+	private IScheduler scheduler;
 }

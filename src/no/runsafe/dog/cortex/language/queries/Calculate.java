@@ -25,10 +25,11 @@ public class Calculate extends ChatResponderRule
 			{
 				String maths = result.group(1);
 				ScriptEngineManager manager = new ScriptEngineManager();
-				ScriptEngine engine = manager.getEngineByName("js");
+				ScriptEngine engine = manager.getEngineByName("JavaScript");
 				Object answer = engine.eval(maths);
 
-				return String.format("That would be %s, %s.", String.valueOf(answer), player);
+				return maths;
+				//return String.format("That would be %s, %s.", String.valueOf(answer), player);
 			}
 			catch (ScriptException e)
 			{

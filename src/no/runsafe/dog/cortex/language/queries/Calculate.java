@@ -23,13 +23,12 @@ public class Calculate extends ChatResponderRule
 		{
 			try
 			{
-				String maths = result.group(1);
+				String maths = result.group(2);
 				ScriptEngineManager manager = new ScriptEngineManager();
 				ScriptEngine engine = manager.getEngineByName("JavaScript");
 				Object answer = engine.eval(maths);
 
-				return maths;
-				//return String.format("That would be %s, %s.", String.valueOf(answer), player);
+				return String.format("That would be %s, %s.", String.valueOf(answer), player);
 			}
 			catch (ScriptException e)
 			{

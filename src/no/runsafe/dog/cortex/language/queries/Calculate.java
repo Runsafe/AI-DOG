@@ -23,7 +23,7 @@ public class Calculate extends ChatResponderRule
 		{
 			try
 			{
-				String maths = result.group(2);
+				String maths = result.group(1);
 				ScriptEngineManager manager = new ScriptEngineManager();
 				ScriptEngine engine = manager.getEngineByName("JavaScript");
 				Object answer = engine.eval(maths);
@@ -38,5 +38,5 @@ public class Calculate extends ChatResponderRule
 		return null;
 	}
 
-	private static final Pattern question = Pattern.compile(".*calculate.*([0-9\\+\\-\\*/\\s\\(\\)]*)$");
+	private static final Pattern question = Pattern.compile("^calculate\\s([0-9\\+\\-\\*/\\s\\(\\)]+)$");
 }

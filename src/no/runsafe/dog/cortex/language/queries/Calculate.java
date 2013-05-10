@@ -38,5 +38,5 @@ public class Calculate extends ChatResponderRule
 		return null;
 	}
 
-	private static final Pattern question = Pattern.compile("(?i)^calculate\\s([0-9\\+\\-\\*/\\s\\(\\)]+)$");
+	private static final Pattern question = Pattern.compile("(?i)^calculate\\s([0-9\\+\\-\\*/\\s\\(\\)\\.]+)$");
 }

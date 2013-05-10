@@ -10,3 +10,7 @@ messages.blocked:
   world_nether: Hello there, you seem to want to play Survival! Please contact a member of staff and ask to become a builder to proceed.
   world_the_end: Hello there, you seem to want to play Survival! Please contact a member of staff and ask to become a builder to proceed.
   world_creative: Hello there, you seem to want to play Creative! Please find a free plot and ask a member of staff if you can have it.
+where:
+  world: "%s is playing in survival."
+  Creative: "%s is building in the creative world."
+  gameroom: "%s is busy in one of the gaming worlds."

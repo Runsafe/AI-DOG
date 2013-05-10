@@ -42,6 +42,6 @@ public class Where extends ChatResponderRule implements IConfigurationChanged
 		this.worldMessages = configuration.getConfigValuesAsMap("where");
 	}
 
-	private static final Pattern question = Pattern.compile(".*(where\\sis\\s)([a-z0-9_-]+).*");
+	private static final Pattern question = Pattern.compile(".*(where\\sis\\s)([a-zA-Z0-9_-]+).*");
 	private Map<String, String> worldMessages = new HashMap<String, String>();
 }

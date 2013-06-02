@@ -50,7 +50,7 @@ public class PlayerLogin implements IPlayerPreLoginEvent, IPlayerJoinEvent
 		this.playersToWelcome.remove(playerName);
 	}
 
-	private Speech speechCenter;
-	private List<String> playersToWelcome = new ArrayList<String>();
-	private IScheduler scheduler;
+	private final Speech speechCenter;
+	private final List<String> playersToWelcome = new ArrayList<String>();
+	private final IScheduler scheduler;
 }

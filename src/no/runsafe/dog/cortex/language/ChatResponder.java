@@ -2,7 +2,10 @@ package no.runsafe.dog.cortex.language;
 
 import no.runsafe.dog.cortex.Subsystem;
 import no.runsafe.dog.cortex.memory.ChatTriggerRepository;
+import no.runsafe.framework.RunsafePlugin;
+import no.runsafe.framework.ai.IChatResponseTrigger;
 import no.runsafe.framework.configuration.IConfiguration;
+import no.runsafe.framework.event.IPluginEnabled;
 import no.runsafe.framework.event.player.IPlayerChatEvent;
 import no.runsafe.framework.output.IOutput;
 import no.runsafe.framework.server.event.player.RunsafePlayerChatEvent;
@@ -10,19 +13,17 @@ import no.runsafe.framework.timer.IScheduler;
 import no.runsafe.framework.timer.Worker;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ChatResponder extends Worker<String, String> implements Runnable, Subsystem, IPlayerChatEvent
+public class ChatResponder extends Worker<String, String> implements Runnable, Subsystem, IPlayerChatEvent, IPluginEnabled
 {
 	public ChatResponder(
 		IScheduler scheduler,
 		ChatTriggerRepository repository,
 		Speech speechCenter,
-		IOutput output,
-		ChatResponderRule[] responders
+		IOutput output
 	)
 	{
 		super(scheduler);
@@ -30,7 +31,12 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 		this.console = output;
 		this.chatTriggerRepository = repository;
 		this.speech = speechCenter;
-		this.staticResponders = responders;
+	}
+
+	@Override
+	public void OnPluginEnabled()
+	{
+		staticResponders.addAll(RunsafePlugin.getPluginAPI(IChatResponseTrigger.class));
 	}
 
 	@Override
@@ -41,7 +47,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 		{
 			activeTriggers.clear();
 			activeTriggers.addAll(rules);
-			Collections.addAll(activeTriggers, staticResponders);
+			activeTriggers.addAll(staticResponders);
 		}
 		console.writeColoured(
 			"Successfully loaded &a%d chat responders&r.",
@@ -70,7 +76,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 		console.finer(String.format("Checking message '%s' from '%s'", message, player));
 
 		if (isPlayerOffCooldown(player))
-			for (ChatResponderRule rule : activeTriggers.toArray(new ChatResponderRule[activeTriggers.size()]))
+			for (IChatResponseTrigger rule : activeTriggers)
 			{
 				String response = rule.getResponse(player, message);
 				if (response != null)
@@ -97,7 +103,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 		return true;
 	}
 
-	private void applyRuleCooldown(final ChatResponderRule rule)
+	private void applyRuleCooldown(final IChatResponseTrigger rule)
 	{
 		if (ruleCooldown > 0)
 		{
@@ -124,11 +130,11 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	private final IScheduler scheduler;
 	private final ChatTriggerRepository chatTriggerRepository;
 	private final ConcurrentHashMap<String, Long> playerCooldowns = new ConcurrentHashMap<String, Long>();
-	private final ArrayList<ChatResponderRule> activeTriggers = new ArrayList<ChatResponderRule>();
-	private int ruleCooldown;
-	private int playerCooldown;
+	private final ArrayList<IChatResponseTrigger> activeTriggers = new ArrayList<IChatResponseTrigger>();
 	private final Speech speech;
 	private final IOutput console;
-	private final ChatResponderRule[] staticResponders;
+	private final List<IChatResponseTrigger> staticResponders = new ArrayList<IChatResponseTrigger>();
+	private int ruleCooldown;
+	private int playerCooldown;
 	private String dogName;
 }

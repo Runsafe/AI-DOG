@@ -1,11 +1,12 @@
 package no.runsafe.dog.cortex.language;
 
+import no.runsafe.framework.ai.IChatResponseTrigger;
 import no.runsafe.framework.server.RunsafeServer;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ChatResponderRule
+public class ChatResponderRule implements IChatResponseTrigger
 {
 	public ChatResponderRule(String pattern, String response, String alternate, String alternatePermission)
 	{

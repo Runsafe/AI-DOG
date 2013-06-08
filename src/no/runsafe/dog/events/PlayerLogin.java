@@ -23,11 +23,10 @@ public class PlayerLogin implements IPlayerPreLoginEvent, IPlayerJoinEvent
 	@Override
 	public void OnBeforePlayerLogin(RunsafePlayerPreLoginEvent event)
 	{
-		String playerName = event.getPlayer().getName();
-		RunsafePlayer player = RunsafeServer.Instance.getPlayer(playerName);
+		RunsafePlayer player = event.getPlayer();
 
 		if (player.isNew())
-			this.playersToWelcome.add(playerName);
+			this.playersToWelcome.add(player.getName());
 	}
 
 	@Override

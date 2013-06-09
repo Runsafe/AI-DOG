@@ -5,12 +5,10 @@ import no.runsafe.framework.database.IDatabase;
 import no.runsafe.framework.database.ISchemaChanges;
 import no.runsafe.framework.output.IOutput;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.regex.PatternSyntaxException;
 
@@ -49,34 +47,34 @@ public class ChatTriggerRepository implements ISchemaChanges
 
 	public List<ChatResponderRule> getRules()
 	{
-		PreparedStatement select = this.database.prepare("SELECT pattern,reply,alternate,alternate_permission FROM ai_dog");
-		try
-		{
-			ResultSet data = select.executeQuery();
-			ArrayList<ChatResponderRule> rules = new ArrayList<ChatResponderRule>();
-			while (data.next())
-			{
-				try
-				{
-					rules.add(new ChatResponderRule(data.getString(1), data.getString(2), data.getString(3), data.getString(4)));
-					console.fine("Added pattern '%s'", data.getString("pattern"));
-				}
-				catch (PatternSyntaxException e)
-				{
-					console.writeColoured(
-						"Invalid regular expression '&e%1$s&r' - &c%2$s&r",
-						Level.WARNING,
-						e.getPattern(), e.getDescription()
-					);
-				}
-			}
-			return rules;
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
+		List<Map<String, Object>> data = this.database.Query("SELECT pattern,reply,alternate,alternate_permission FROM ai_dog");
+		if (data == null || data.isEmpty())
 			return null;
+		ArrayList<ChatResponderRule> rules = new ArrayList<ChatResponderRule>();
+		for (Map<String, Object> row : data)
+		{
+			try
+			{
+				rules.add(
+					new ChatResponderRule(
+						(String)row.get("pattern"),
+						(String)row.get("response"),
+						(String)row.get("alternate"),
+						(String)row.get("alternate_permission")
+					)
+				);
+				console.fine("Added pattern '%s'", row.get("pattern"));
+			}
+			catch (PatternSyntaxException e)
+			{
+				console.writeColoured(
+					"Invalid regular expression '&e%1$s&r' - &c%2$s&r",
+					Level.WARNING,
+					e.getPattern(), e.getDescription()
+				);
+			}
 		}
+		return rules;
 	}
 
 	private final IDatabase database;

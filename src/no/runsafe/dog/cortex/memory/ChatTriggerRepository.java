@@ -3,12 +3,13 @@ package no.runsafe.dog.cortex.memory;
 import no.runsafe.dog.cortex.language.ChatResponderRule;
 import no.runsafe.framework.database.IDatabase;
 import no.runsafe.framework.database.ISchemaChanges;
+import no.runsafe.framework.database.Row;
 import no.runsafe.framework.output.IOutput;
+import no.runsafe.framework.database.Set;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.regex.PatternSyntaxException;
 
@@ -47,23 +48,24 @@ public class ChatTriggerRepository implements ISchemaChanges
 
 	public List<ChatResponderRule> getRules()
 	{
-		List<Map<String, Object>> data = this.database.Query("SELECT pattern,reply,alternate,alternate_permission FROM ai_dog");
+		Set data = this.database.Query("SELECT pattern,reply,alternate,alternate_permission FROM ai_dog");
 		if (data == null || data.isEmpty())
 			return null;
+
 		ArrayList<ChatResponderRule> rules = new ArrayList<ChatResponderRule>();
-		for (Map<String, Object> row : data)
+		for (Row row : data)
 		{
 			try
 			{
 				rules.add(
 					new ChatResponderRule(
-						(String)row.get("pattern"),
-						(String)row.get("response"),
-						(String)row.get("alternate"),
-						(String)row.get("alternate_permission")
+						row.String("pattern"),
+						row.String("response"),
+						row.String("alternate"),
+						row.String("alternate_permission")
 					)
 				);
-				console.fine("Added pattern '%s'", row.get("pattern"));
+				console.fine("Added pattern '%s'", row.String("pattern"));
 			}
 			catch (PatternSyntaxException e)
 			{

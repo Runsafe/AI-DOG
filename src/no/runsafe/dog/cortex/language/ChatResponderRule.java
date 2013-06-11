@@ -1,7 +1,7 @@
 package no.runsafe.dog.cortex.language;
 
-import no.runsafe.framework.ai.IChatResponseTrigger;
-import no.runsafe.framework.server.RunsafeServer;
+import no.runsafe.framework.api.ai.IChatResponseTrigger;
+import no.runsafe.framework.minecraft.RunsafeServer;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

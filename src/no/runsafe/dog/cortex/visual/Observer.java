@@ -3,10 +3,10 @@ package no.runsafe.dog.cortex.visual;
 import no.runsafe.dog.cortex.Subsystem;
 import no.runsafe.dog.cortex.language.Speech;
 import no.runsafe.dog.cortex.reason.PlayerChecks;
-import no.runsafe.framework.configuration.IConfiguration;
-import no.runsafe.framework.event.player.IPlayerInteractEvent;
-import no.runsafe.framework.server.event.player.RunsafePlayerInteractEvent;
-import no.runsafe.framework.server.player.RunsafePlayer;
+import no.runsafe.framework.api.IConfiguration;
+import no.runsafe.framework.api.event.player.IPlayerInteractEvent;
+import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEvent;
+import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;

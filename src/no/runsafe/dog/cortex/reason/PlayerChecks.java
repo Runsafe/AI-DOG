@@ -1,8 +1,8 @@
 package no.runsafe.dog.cortex.reason;
 
 import no.runsafe.dog.cortex.Subsystem;
-import no.runsafe.framework.configuration.IConfiguration;
-import no.runsafe.framework.server.player.RunsafePlayer;
+import no.runsafe.framework.api.IConfiguration;
+import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 import java.util.List;
 

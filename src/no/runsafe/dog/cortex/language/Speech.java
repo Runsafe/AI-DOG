@@ -1,11 +1,11 @@
 package no.runsafe.dog.cortex.language;
 
 import no.runsafe.dog.cortex.Subsystem;
-import no.runsafe.framework.configuration.IConfiguration;
-import no.runsafe.framework.server.RunsafeServer;
-import no.runsafe.framework.server.event.player.RunsafePlayerFakeChatEvent;
-import no.runsafe.framework.server.player.RunsafeFakePlayer;
-import no.runsafe.framework.server.player.RunsafePlayer;
+import no.runsafe.framework.api.IConfiguration;
+import no.runsafe.framework.minecraft.RunsafeServer;
+import no.runsafe.framework.minecraft.event.player.RunsafePlayerFakeChatEvent;
+import no.runsafe.framework.minecraft.player.RunsafeFakePlayer;
+import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 public class Speech implements Subsystem
 {

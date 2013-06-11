@@ -2,12 +2,12 @@ package no.runsafe.dog.cortex.language.queries;
 
 import no.runsafe.dog.cortex.language.ChatResponderRule;
 import no.runsafe.framework.RunsafePlugin;
-import no.runsafe.framework.command.ICommandHandler;
-import no.runsafe.framework.command.prepared.IPreparedCommand;
-import no.runsafe.framework.command.prepared.PreparedAsynchronousCommand;
-import no.runsafe.framework.server.RunsafeServer;
-import no.runsafe.framework.server.player.RunsafeAmbiguousPlayer;
-import no.runsafe.framework.server.player.RunsafePlayer;
+import no.runsafe.framework.api.command.ICommandHandler;
+import no.runsafe.framework.api.command.IPreparedCommand;
+import no.runsafe.framework.internal.command.prepared.PreparedAsynchronousCommand;
+import no.runsafe.framework.minecraft.RunsafeServer;
+import no.runsafe.framework.minecraft.player.RunsafeAmbiguousPlayer;
+import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

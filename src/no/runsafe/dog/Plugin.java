@@ -12,7 +12,7 @@ import no.runsafe.dog.cortex.reason.PlayerChecks;
 import no.runsafe.dog.cortex.visual.Observer;
 import no.runsafe.dog.events.PlayerLogin;
 import no.runsafe.framework.RunsafeConfigurablePlugin;
-import no.runsafe.framework.command.Command;
+import no.runsafe.framework.api.command.Command;
 
 public class Plugin extends RunsafeConfigurablePlugin
 {

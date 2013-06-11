@@ -1,6 +1,6 @@
 package no.runsafe.dog.cortex;
 
-import no.runsafe.framework.configuration.IConfiguration;
+import no.runsafe.framework.api.IConfiguration;
 
 public interface Subsystem
 {

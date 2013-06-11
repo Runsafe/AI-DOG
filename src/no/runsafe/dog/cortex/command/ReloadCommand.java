@@ -1,9 +1,9 @@
 package no.runsafe.dog.cortex.command;
 
 import no.runsafe.dog.DogBrain;
-import no.runsafe.framework.command.AsyncCommand;
-import no.runsafe.framework.server.ICommandExecutor;
-import no.runsafe.framework.timer.IScheduler;
+import no.runsafe.framework.api.IScheduler;
+import no.runsafe.framework.api.command.ICommandExecutor;
+import no.runsafe.framework.internal.command.AsyncCommand;
 
 import java.util.HashMap;
 

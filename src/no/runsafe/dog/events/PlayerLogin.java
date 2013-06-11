@@ -1,13 +1,12 @@
 package no.runsafe.dog.events;
 
 import no.runsafe.dog.cortex.language.Speech;
-import no.runsafe.framework.event.player.IPlayerJoinEvent;
-import no.runsafe.framework.event.player.IPlayerPreLoginEvent;
-import no.runsafe.framework.server.RunsafeServer;
-import no.runsafe.framework.server.event.player.RunsafePlayerJoinEvent;
-import no.runsafe.framework.server.event.player.RunsafePlayerPreLoginEvent;
-import no.runsafe.framework.server.player.RunsafePlayer;
-import no.runsafe.framework.timer.IScheduler;
+import no.runsafe.framework.api.IScheduler;
+import no.runsafe.framework.api.event.player.IPlayerJoinEvent;
+import no.runsafe.framework.api.event.player.IPlayerPreLoginEvent;
+import no.runsafe.framework.minecraft.event.player.RunsafePlayerJoinEvent;
+import no.runsafe.framework.minecraft.event.player.RunsafePlayerPreLoginEvent;
+import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,8 @@ public class PlayerLogin implements IPlayerPreLoginEvent, IPlayerJoinEvent
 	{
 		final String playerName = event.getPlayer().getName();
 		if (this.playersToWelcome.contains(playerName))
-			this.scheduler.startSyncTask(new Runnable() {
+			this.scheduler.startSyncTask(new Runnable()
+			{
 				@Override
 				public void run()
 				{

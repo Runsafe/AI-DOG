@@ -1,9 +1,8 @@
 package no.runsafe.dog;
 
 import no.runsafe.dog.cortex.Subsystem;
-import no.runsafe.framework.configuration.IConfiguration;
-import no.runsafe.framework.event.IConfigurationChanged;
-import no.runsafe.framework.event.IPluginEnabled;
+import no.runsafe.framework.api.IConfiguration;
+import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 
 public class DogBrain implements IConfigurationChanged
 {

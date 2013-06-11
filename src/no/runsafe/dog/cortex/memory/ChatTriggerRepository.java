@@ -60,7 +60,7 @@ public class ChatTriggerRepository implements ISchemaChanges
 				rules.add(
 					new ChatResponderRule(
 						row.String("pattern"),
-						row.String("response"),
+						row.String("reply"),
 						row.String("alternate"),
 						row.String("alternate_permission")
 					)

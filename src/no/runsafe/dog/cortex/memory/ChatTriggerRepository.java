@@ -3,9 +3,9 @@ package no.runsafe.dog.cortex.memory;
 import no.runsafe.dog.cortex.language.ChatResponderRule;
 import no.runsafe.framework.api.IOutput;
 import no.runsafe.framework.api.database.IDatabase;
-import no.runsafe.framework.api.database.ISchemaChanges;
-import no.runsafe.framework.internal.database.Row;
-import no.runsafe.framework.internal.database.Set;
+import no.runsafe.framework.api.database.IRow;
+import no.runsafe.framework.api.database.ISet;
+import no.runsafe.framework.api.database.Repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.regex.PatternSyntaxException;
 
-public class ChatTriggerRepository implements ISchemaChanges
+public class ChatTriggerRepository extends Repository
 {
 	public ChatTriggerRepository(IDatabase database, IOutput output)
 	{
@@ -48,12 +48,12 @@ public class ChatTriggerRepository implements ISchemaChanges
 
 	public List<ChatResponderRule> getRules()
 	{
-		Set data = this.database.Query("SELECT pattern,reply,alternate,alternate_permission FROM ai_dog");
+		ISet data = this.database.Query("SELECT pattern,reply,alternate,alternate_permission FROM ai_dog");
 		if (data == null || data.isEmpty())
 			return null;
 
 		ArrayList<ChatResponderRule> rules = new ArrayList<ChatResponderRule>();
-		for (Row row : data)
+		for (IRow row : data)
 		{
 			try
 			{

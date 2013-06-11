@@ -1,8 +1,8 @@
 package no.runsafe.dog.cortex.command;
 
 import no.runsafe.dog.cortex.language.Speech;
+import no.runsafe.framework.api.command.ExecutableCommand;
 import no.runsafe.framework.api.command.ICommandExecutor;
-import no.runsafe.framework.internal.command.ExecutableCommand;
 
 import java.util.HashMap;
 

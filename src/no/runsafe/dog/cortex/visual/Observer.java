@@ -33,7 +33,7 @@ public class Observer implements Subsystem, IPlayerInteractEvent
 	public void OnPlayerInteractEvent(RunsafePlayerInteractEvent event)
 	{
 		RunsafePlayer player = event.getPlayer();
-		if (playerChecks.isGuest(player) && shouldNotify(player))
+		if (blockedMessages.containsKey(player.getWorld().getName()) && playerChecks.isGuest(player) && shouldNotify(player))
 		{
 			speech.Whisper(player, blockedMessages.get(player.getWorld().getName()));
 			isNotified(player);

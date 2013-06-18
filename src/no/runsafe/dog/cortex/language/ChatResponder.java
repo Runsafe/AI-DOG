@@ -49,10 +49,9 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 			activeTriggers.addAll(rules);
 			activeTriggers.addAll(staticResponders);
 		}
-		console.writeColoured(
-			"Successfully loaded &a%d chat responders&r.",
-			activeTriggers.size()
-		);
+
+		console.logInformation("Successfully loaded %d chat responders.", activeTriggers.size());
+
 		if (config == null)
 			return;
 		ruleCooldown = config.getConfigValueAsInt("autoresponder.cooldown.rule");

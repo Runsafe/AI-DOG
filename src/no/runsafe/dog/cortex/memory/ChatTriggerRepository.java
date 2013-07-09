@@ -43,6 +43,9 @@ public class ChatTriggerRepository extends Repository
 		sql.add("ALTER TABLE ai_dog ADD COLUMN alternate varchar(255) NULL");
 		sql.add("ALTER TABLE ai_dog ADD COLUMN alternate_permission varchar(255) NULL");
 		queries.put(2, sql);
+		sql = new ArrayList<String>();
+		sql.add("ALTER TABLE `ai_dog` ADD COLUMN `ID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`ID`)");
+		queries.put(3, sql);
 		return queries;
 	}
 

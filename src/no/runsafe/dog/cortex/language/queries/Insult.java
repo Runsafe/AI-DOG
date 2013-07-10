@@ -3,7 +3,6 @@ package no.runsafe.dog.cortex.language.queries;
 import no.runsafe.dog.cortex.language.ChatResponderRule;
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
-import no.runsafe.framework.minecraft.RunsafeServer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ public class Insult extends ChatResponderRule implements IConfigurationChanged
 	public String getResponse(String player, String message)
 	{
 		Matcher results = question.matcher(message);
-		RunsafeServer.Instance.getLogger().info(player + " - " + message);
+
 		if (results.matches())
 			return String.format("%s, you're nothing but a %s.", player, this.createInsult());
 

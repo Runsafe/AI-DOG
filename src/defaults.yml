@@ -14,7 +14,6 @@ where:
   world: "%s is playing in survival."
   Creative: "%s is building in the creative world."
   gameroom: "%s is busy in one of the gaming worlds."
-
 insults:
   firstTier:
     - 'lazy'

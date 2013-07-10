@@ -22,7 +22,7 @@ public class Insult extends ChatResponderRule implements IConfigurationChanged
 	public String getResponse(String player, String message)
 	{
 		Matcher results = question.matcher(message);
-		if (results.matches())
+		if (results.find())
 			return String.format("%s, you're nothing but a %s.", player, this.createInsult());
 
 		return null;

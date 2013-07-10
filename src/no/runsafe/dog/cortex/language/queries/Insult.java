@@ -45,7 +45,7 @@ public class Insult extends ChatResponderRule implements IConfigurationChanged
 		this.insultTiers.clear();
 		Map<String, List<String>> insults = configuration.getConfigSectionsAsList("insults");
 		for (List<String> insultTier : insults.values())
-			this.insultTiers.add(insultTier);
+			this.insultTiers.add(0, insultTier);
 	}
 
 	private static final Pattern question = Pattern.compile("(?i).*(darn|fuck|screw|damn)\\s(you\\s|off\\s|)dog.*");

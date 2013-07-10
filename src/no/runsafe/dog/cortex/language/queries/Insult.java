@@ -47,7 +47,7 @@ public class Insult extends ChatResponderRule implements IConfigurationChanged
 			this.insultTiers.add(insultTier);
 	}
 
-	private static final Pattern question = Pattern.compile(".*(darn|fuck|screw|damn)\\s(you\\s|off\\s|)dog.*");
+	private static final Pattern question = Pattern.compile("(?i).*(darn|fuck|screw|damn)\\s(you\\s|off\\s|)dog.*");
 	private List<List<String>> insultTiers = new ArrayList<List<String>>();
 	private Random random = new Random();
 }

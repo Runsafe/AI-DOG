@@ -26,7 +26,7 @@ public class Where extends ChatResponderRule implements IConfigurationChanged
 		if (results.matches())
 		{
 			RunsafePlayer target = RunsafeServer.Instance.getPlayer(results.group(2).toLowerCase());
-			if (target.isOnline())
+			if (target.isOnline() && !target.isVanished())
 			{
 				String worldName = target.getWorld().getName();
 				if (this.worldMessages.containsKey(worldName))

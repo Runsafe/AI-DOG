@@ -15,7 +15,7 @@ where:
   Creative: "%s is building in the creative world."
   gameroom: "%s is busy in one of the gaming worlds."
 insults:
-  firstTier:
+  a:
     - 'lazy'
     - 'stupid'
     - 'insecure'
@@ -33,7 +33,7 @@ insults:
     - 'tone deaf'
     - 'ugly'
     - 'creepy'
-  secondTier:
+  b:
     - 'douche'
     - 'ass'
     - 'turd'
@@ -53,7 +53,7 @@ insults:
     - 'shart'
     - 'nut'
     - 'sphincter'
-  thirdTier:
+  c:
     - 'pilot'
     - 'canoe'
     - 'captain'

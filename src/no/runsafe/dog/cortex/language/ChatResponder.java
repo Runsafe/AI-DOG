@@ -38,6 +38,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	public void OnPluginEnabled()
 	{
 		staticResponders.addAll(RunsafePlugin.getPluginAPI(IChatResponseTrigger.class));
+		activeTriggers.addAll(staticResponders);
 	}
 
 	@Override
@@ -116,7 +117,8 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 				@Override
 				public void run()
 				{
-					activeTriggers.add(rule);
+					if (!activeTriggers.contains(rule))
+						activeTriggers.add(rule);
 				}
 			};
 			activeTriggers.remove(rule);

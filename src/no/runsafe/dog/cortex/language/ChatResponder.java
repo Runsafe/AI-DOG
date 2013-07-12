@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
 
 public class ChatResponder extends Worker<String, String> implements Runnable, Subsystem, IPlayerChatEvent, IPluginEnabled
 {
@@ -77,7 +78,10 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 		if (isPlayerOffCooldown(player))
 			for (IChatResponseTrigger rule : activeTriggers)
 			{
-				String response = rule.getResponse(player, message);
+				Matcher matcher = rule.getRule().matcher(message);
+				if (!matcher.matches())
+					continue;
+				String response = rule.getResponse(player, matcher);
 				if (response != null)
 				{
 					applyRuleCooldown(rule);

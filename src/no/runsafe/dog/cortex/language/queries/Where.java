@@ -9,30 +9,25 @@ import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Where extends ChatResponderRule implements IConfigurationChanged
 {
 	public Where()
 	{
-		super(null, null, null, null);
+		super("(?i).*(where\\sis\\s)([a-zA-Z0-9_-]+).*", null, null, null);
 	}
 
 	@Override
-	public String getResponse(String player, String message)
+	public String getResponse(String player, Matcher message)
 	{
-		Matcher results = question.matcher(message);
+		RunsafePlayer target = RunsafeServer.Instance.getPlayer(message.group(2).toLowerCase());
+		if (!target.isOnline() || target.isVanished())
+			return null;
 
-		if (results.matches())
-		{
-			RunsafePlayer target = RunsafeServer.Instance.getPlayer(results.group(2).toLowerCase());
-			if (target.isOnline() && !target.isVanished())
-			{
-				String worldName = target.getWorld().getName();
-				if (this.worldMessages.containsKey(worldName))
-					return String.format(this.worldMessages.get(worldName), target.getName());
-			}
-		}
+		String worldName = target.getWorld().getName();
+		if (this.worldMessages.containsKey(worldName))
+			return String.format(this.worldMessages.get(worldName), target.getName());
+
 		return null;
 	}
 
@@ -42,6 +37,5 @@ public class Where extends ChatResponderRule implements IConfigurationChanged
 		this.worldMessages = configuration.getConfigValuesAsMap("where");
 	}
 
-	private static final Pattern question = Pattern.compile("(?i).*(where\\sis\\s)([a-zA-Z0-9_-]+).*");
 	private Map<String, String> worldMessages = new HashMap<String, String>();
 }

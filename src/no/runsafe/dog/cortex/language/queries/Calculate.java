@@ -6,37 +6,30 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Calculate extends ChatResponderRule
 {
 	public Calculate()
 	{
-		super(null, null, null, null);
+		super("(?i)^calculate\\s([0-9\\+\\-\\*/\\s\\(\\)\\.]+)$", null, null, null);
 	}
 
 	@Override
-	public String getResponse(String player, String message)
+	public String getResponse(String player, Matcher message)
 	{
-		Matcher result = question.matcher(message);
-		if (result.matches())
+		try
 		{
-			try
-			{
-				String maths = result.group(1);
-				ScriptEngineManager manager = new ScriptEngineManager();
-				ScriptEngine engine = manager.getEngineByName("JavaScript");
-				Object answer = engine.eval(maths);
+			String maths = message.group(1);
+			ScriptEngineManager manager = new ScriptEngineManager();
+			ScriptEngine engine = manager.getEngineByName("JavaScript");
+			Object answer = engine.eval(maths);
 
-				return String.format("That would be %s, %s.", String.valueOf(answer), player);
-			}
-			catch (ScriptException e)
-			{
-				// Derp.
-			}
+			return String.format("That would be %s, %s.", String.valueOf(answer), player);
+		}
+		catch (ScriptException e)
+		{
+			// Derp.
 		}
 		return null;
 	}
-
-	private static final Pattern question = Pattern.compile("(?i)^calculate\\s([0-9\\+\\-\\*/\\s\\(\\)\\.]+)$");
 }

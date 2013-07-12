@@ -26,17 +26,19 @@ public class ChatResponderRule implements IChatResponseTrigger
 		}
 	}
 
-	public String getResponse(String player, String message)
+	@Override
+	public String getResponse(String player, Matcher message)
 	{
-		Matcher matcher = rule.matcher(message);
-		if (matcher.matches())
-		{
-			if (alternatePermission != null && RunsafeServer.Instance.someoneHasPermission(alternatePermission))
-				return playerPattern.matcher(alternate).replaceAll(player);
+		if (alternatePermission != null && RunsafeServer.Instance.someoneHasPermission(alternatePermission))
+			return playerPattern.matcher(alternate).replaceAll(player);
 
-			return playerPattern.matcher(response).replaceAll(player);
-		}
-		return null;
+		return playerPattern.matcher(response).replaceAll(player);
+	}
+
+	@Override
+	public Pattern getRule()
+	{
+		return rule;
 	}
 
 	private final String response;

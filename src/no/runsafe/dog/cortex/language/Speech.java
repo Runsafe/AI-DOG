@@ -29,7 +29,7 @@ public class Speech implements Subsystem
 	{
 		RunsafePlayerFakeChatEvent event = new RunsafePlayerFakeChatEvent(personality, message);
 		event.Fire();
-		if (!event.getCancelled())
+		if (!event.isCancelled())
 			this.server.broadcastMessage(String.format(event.getFormat(), event.getPlayer().getName(), event.getMessage()));
 	}
 

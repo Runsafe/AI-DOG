@@ -9,11 +9,6 @@ import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 public class Speech implements Subsystem
 {
-	public Speech(RunsafeServer server)
-	{
-		this.server = server;
-	}
-
 	@Override
 	public void reload(IConfiguration configuration)
 	{
@@ -27,10 +22,7 @@ public class Speech implements Subsystem
 
 	public void Speak(String message)
 	{
-		RunsafePlayerFakeChatEvent event = new RunsafePlayerFakeChatEvent(personality, message);
-		event.Fire();
-		if (!event.isCancelled())
-			this.server.broadcastMessage(String.format(event.getFormat(), event.getPlayer().getName(), event.getMessage()));
+		RunsafePlayerFakeChatEvent.Broadcast(personality, message);
 	}
 
 	public void Whisper(RunsafePlayer player, String message)
@@ -38,7 +30,6 @@ public class Speech implements Subsystem
 		player.sendColouredMessage(whisperFormat, personality.getPrettyName(), message);
 	}
 
-	private final RunsafeServer server;
 	private RunsafeFakePlayer personality;
 	private String whisperFormat;
 }

@@ -4,7 +4,7 @@ import no.runsafe.dog.cortex.language.Speech;
 import no.runsafe.framework.api.command.ExecutableCommand;
 import no.runsafe.framework.api.command.ICommandExecutor;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class SpeakCommand extends ExecutableCommand
 {
@@ -16,7 +16,7 @@ public class SpeakCommand extends ExecutableCommand
 	}
 
 	@Override
-	public String OnExecute(ICommandExecutor executor, HashMap<String, String> parameters)
+	public String OnExecute(ICommandExecutor executor, Map<String, String> parameters)
 	{
 		speech.Speak(parameters.get("message"));
 		return "DOG has been commanded. Please use AI puppeteering sparingly.";

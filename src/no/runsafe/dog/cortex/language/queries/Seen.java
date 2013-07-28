@@ -4,7 +4,7 @@ import no.runsafe.dog.cortex.language.ChatResponderRule;
 import no.runsafe.framework.RunsafePlugin;
 import no.runsafe.framework.api.command.ICommandHandler;
 import no.runsafe.framework.api.command.IPreparedCommand;
-import no.runsafe.framework.internal.command.prepared.PreparedAsynchronousCommand;
+import no.runsafe.framework.internal.command.PreparedAsynchronousCommand;
 import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.player.RunsafeAmbiguousPlayer;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;

@@ -14,8 +14,10 @@ public class Speech implements Subsystem
 	{
 		if (configuration == null)
 			return;
-		personality = new RunsafeFakePlayer(configuration.getConfigValueAsString("name"));
-		personality.getGroups().add(configuration.getConfigValueAsString("group"));
+		personality = new RunsafeFakePlayer(
+			configuration.getConfigValueAsString("name"),
+			configuration.getConfigValueAsString("group")
+		);
 		personality.setWorld(RunsafeServer.Instance.getWorld(configuration.getConfigValueAsString("world")));
 		whisperFormat = configuration.getConfigValueAsString("whisper");
 	}

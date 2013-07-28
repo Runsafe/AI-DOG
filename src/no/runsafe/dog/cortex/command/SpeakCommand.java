@@ -3,6 +3,7 @@ package no.runsafe.dog.cortex.command;
 import no.runsafe.dog.cortex.language.Speech;
 import no.runsafe.framework.api.command.ExecutableCommand;
 import no.runsafe.framework.api.command.ICommandExecutor;
+import no.runsafe.framework.api.command.argument.TrailingArgument;
 
 import java.util.Map;
 
@@ -10,9 +11,8 @@ public class SpeakCommand extends ExecutableCommand
 {
 	public SpeakCommand(Speech speechCenter)
 	{
-		super("speak", "Command DOG to say something clever", "runsafe.dog.speak", "message");
+		super("speak", "Command DOG to say something clever", "runsafe.dog.speak", new TrailingArgument("message"));
 		speech = speechCenter;
-		captureTail();
 	}
 
 	@Override

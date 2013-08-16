@@ -32,6 +32,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 		this.console = output;
 		this.chatTriggerRepository = repository;
 		this.speech = speechCenter;
+		this.setInterval(10);
 	}
 
 	@Override
@@ -75,10 +76,32 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	@Override
 	public void OnPlayerChatEvent(RunsafePlayerChatEvent event)
 	{
-		if (event.getPlayer().getName().equals(dogName))
+		if (event.getPlayer() == null || dogName.equals(event.getPlayer().getName()))
 			return;
-		console.finer(String.format("Receiving message '%s' from %s", event.getMessage(), event.getPlayer().getName()));
-		Push(event.getPlayer().getName(), event.getMessage());
+		final String message = event.getMessage();
+		final String player = event.getPlayer().getName();
+		final int task = scheduler.startSyncTask(
+			new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					console.finer(String.format("Receiving message '%s' from %s", message, player));
+					Push(player, message);
+				}
+			},
+			10
+		);
+		event.addCancellationHandle(
+			new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					scheduler.cancelTask(task);
+				}
+			}
+		);
 	}
 
 	@Override

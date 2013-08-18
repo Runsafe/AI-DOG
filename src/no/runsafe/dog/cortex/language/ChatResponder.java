@@ -90,7 +90,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 					Push(player, message);
 				}
 			},
-			10
+			10L
 		);
 		event.addCancellationHandle(
 			new Runnable()

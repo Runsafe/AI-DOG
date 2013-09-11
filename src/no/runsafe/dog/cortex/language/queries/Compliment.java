@@ -11,7 +11,7 @@ public class Compliment extends ChatResponderRule implements IConfigurationChang
 {
 	public Compliment()
 	{
-		super("(?i).*(you\\s+are|you're)\\b(pretty|beautiful|awesome)\\bdog", null, null, null);
+		super("(?i).*(you\\s+are|you're)\\s+(pretty|beautiful|awesome)\\s+dog", null, null, null);
 	}
 
 	@Override

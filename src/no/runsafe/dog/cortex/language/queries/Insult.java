@@ -20,7 +20,7 @@ public class Insult extends ChatResponderRule implements IConfigurationChanged
 		if (!playerHits.containsKey(player))
 		{
 			playerHits.put(player, 0);
-			return String.format("Well, this is out of the blue! You are just a %s, %s.", player, createInsult());
+			return String.format("Well, this is out of the blue! You are just a %s, %s.",createInsult(), player);
 		}
 		else
 		{

@@ -34,7 +34,7 @@ public class Insult extends ChatResponderRule implements IConfigurationChanged
 			else
 			{
 				playerHits.put(player, playerHits.get(player) + 1);
-				return String.format("Well, %s, you are just a %s", player, createInsult());
+				return String.format("Well, %s, you are just a %s.", player, createInsult());
 			}
 		}
 	}

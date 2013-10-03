@@ -17,7 +17,26 @@ public class Compliment extends ChatResponderRule implements IConfigurationChang
 	@Override
 	public String getResponse(String player, Matcher message)
 	{
-		return String.format("Thank you %s, you are a %s!", player, this.createCompliment());
+		if (!playerHits.containsKey(player))
+		{
+			playerHits.put(player, 0);
+			return String.format("Hello %s, you are a %s!", player, this.createCompliment());
+		}
+		else
+		{
+			int hits = playerHits.get(player);
+
+			if (hits == 4)
+			{
+				playerHits.put(player, 0);
+				return String.format("%s, you are a really nice friend but we need to see other people.", player);
+			}
+			else
+			{
+				playerHits.put(player, playerHits.get(player) + 1);
+				return String.format("Thanks %s, you are a %s.", player, this.createCompliment());
+			}
+		}
 	}
 
 	@Override
@@ -47,4 +66,5 @@ public class Compliment extends ChatResponderRule implements IConfigurationChang
 
 	private List<List<String>> complimentTiers = new ArrayList<List<String>>();
 	private Random random = new Random();
+	private HashMap<String, Integer> playerHits = new HashMap<String, Integer>();
 }

@@ -4,7 +4,7 @@ import no.runsafe.dog.cortex.Subsystem;
 import no.runsafe.dog.cortex.memory.ChatTriggerRepository;
 import no.runsafe.framework.RunsafePlugin;
 import no.runsafe.framework.api.IConfiguration;
-import no.runsafe.framework.api.IOutput;
+import no.runsafe.framework.api.IDebug;
 import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.ai.IChatResponseTrigger;
 import no.runsafe.framework.api.event.player.IPlayerChatEvent;
@@ -24,12 +24,12 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 		IScheduler scheduler,
 		ChatTriggerRepository repository,
 		Speech speechCenter,
-		IOutput output
+		IDebug output
 	)
 	{
 		super(scheduler);
 		this.scheduler = scheduler;
-		this.console = output;
+		this.debugger = output;
 		this.chatTriggerRepository = repository;
 		this.speech = speechCenter;
 		this.setInterval(10);
@@ -63,7 +63,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 			activeTriggers.addAll(staticResponders);
 		}
 
-		console.logInformation("Successfully loaded %d chat responders.", activeTriggers.size());
+		debugger.logInformation("Successfully loaded %d chat responders.", activeTriggers.size());
 
 		if (config == null)
 			return;
@@ -86,7 +86,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 				@Override
 				public void run()
 				{
-					console.finer(String.format("Receiving message '%s' from %s", message, player));
+					debugger.debugFiner(String.format("Receiving message '%s' from %s", message, player));
 					Push(player, message);
 				}
 			},
@@ -107,7 +107,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	@Override
 	public void process(String player, String message)
 	{
-		console.finer(String.format("Checking message '%s' from '%s'", message, player));
+		debugger.debugFiner(String.format("Checking message '%s' from '%s'", message, player));
 
 		if (isPlayerOffCooldown(player))
 			for (IChatResponseTrigger rule : activeTriggers)
@@ -120,7 +120,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 				{
 					applyRuleCooldown(rule);
 					applyPlayerCooldown(player);
-					console.fine(String.format("Sending response '%s'", response));
+					debugger.debugFine(String.format("Sending response '%s'", response));
 					speech.Speak(response);
 					break;
 				}
@@ -131,7 +131,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	{
 		if (playerCooldown > 0 && playerCooldowns.containsKey(player))
 		{
-			console.fine("Player is on cooldown.");
+			debugger.debugFine("Player is on cooldown.");
 			if (playerCooldowns.get(player) < new Date().getTime())
 				playerCooldowns.remove(player);
 			else
@@ -144,7 +144,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	{
 		if (ruleCooldown > 0)
 		{
-			console.fine("Putting rule on cooldown");
+			debugger.debugFine("Putting rule on cooldown");
 			Runnable callback = new Runnable()
 			{
 				@Override
@@ -170,7 +170,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	private final ConcurrentHashMap<String, Long> playerCooldowns = new ConcurrentHashMap<String, Long>();
 	private final ArrayList<IChatResponseTrigger> activeTriggers = new ArrayList<IChatResponseTrigger>();
 	private final Speech speech;
-	private final IOutput console;
+	private final IDebug debugger;
 	private final List<IChatResponseTrigger> staticResponders = new ArrayList<IChatResponseTrigger>();
 	private int ruleCooldown;
 	private int playerCooldown;

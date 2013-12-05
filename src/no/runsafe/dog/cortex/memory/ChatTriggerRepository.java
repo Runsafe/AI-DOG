@@ -1,7 +1,7 @@
 package no.runsafe.dog.cortex.memory;
 
 import no.runsafe.dog.cortex.language.ChatResponderRule;
-import no.runsafe.framework.api.IOutput;
+import no.runsafe.framework.api.IDebug;
 import no.runsafe.framework.api.database.IDatabase;
 import no.runsafe.framework.api.database.IRow;
 import no.runsafe.framework.api.database.ISet;
@@ -15,10 +15,10 @@ import java.util.regex.PatternSyntaxException;
 
 public class ChatTriggerRepository extends Repository
 {
-	public ChatTriggerRepository(IDatabase database, IOutput output)
+	public ChatTriggerRepository(IDatabase database, IDebug output)
 	{
 		this.database = database;
-		this.console = output;
+		this.debugger = output;
 	}
 
 	@Override
@@ -68,11 +68,11 @@ public class ChatTriggerRepository extends Repository
 						row.String("alternate_permission")
 					)
 				);
-				console.fine("Added pattern '%s'", row.String("pattern"));
+				debugger.debugFine("Added pattern '%s'", row.String("pattern"));
 			}
 			catch (PatternSyntaxException e)
 			{
-				console.writeColoured(
+				debugger.writeColoured(
 					"Invalid regular expression '&e%1$s&r' - &c%2$s&r",
 					Level.WARNING,
 					e.getPattern(), e.getDescription()
@@ -83,5 +83,5 @@ public class ChatTriggerRepository extends Repository
 	}
 
 	private final IDatabase database;
-	private final IOutput console;
+	private final IDebug debugger;
 }

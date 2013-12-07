@@ -4,10 +4,10 @@ import no.runsafe.dog.cortex.language.ChatResponderRule;
 import no.runsafe.framework.RunsafePlugin;
 import no.runsafe.framework.api.command.ICommandHandler;
 import no.runsafe.framework.api.command.IPreparedCommand;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.command.PreparedAsynchronousCommand;
 import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.player.RunsafeAmbiguousPlayer;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 import java.util.regex.Matcher;
 
@@ -21,7 +21,7 @@ public class Seen extends ChatResponderRule
 	@Override
 	public String getResponse(String player, Matcher message)
 	{
-		RunsafePlayer who = RunsafeServer.Instance.getPlayer(message.group(2).toLowerCase());
+		IPlayer who = RunsafeServer.Instance.getPlayer(message.group(2).toLowerCase());
 		if (who == null || (who instanceof RunsafeAmbiguousPlayer))
 			return null;
 

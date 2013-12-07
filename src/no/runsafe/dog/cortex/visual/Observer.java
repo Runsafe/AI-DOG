@@ -5,6 +5,7 @@ import no.runsafe.dog.cortex.language.Speech;
 import no.runsafe.dog.cortex.reason.PlayerChecks;
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.event.player.IPlayerInteractEvent;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEvent;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
@@ -32,7 +33,7 @@ public class Observer implements Subsystem, IPlayerInteractEvent
 	@Override
 	public void OnPlayerInteractEvent(RunsafePlayerInteractEvent event)
 	{
-		RunsafePlayer player = event.getPlayer();
+		IPlayer player = event.getPlayer();
 		if (blockedMessages.containsKey(player.getWorld().getName()) && playerChecks.isGuest(player) && shouldNotify(player))
 		{
 			speech.Whisper(player, blockedMessages.get(player.getWorld().getName()));
@@ -40,13 +41,13 @@ public class Observer implements Subsystem, IPlayerInteractEvent
 		}
 	}
 
-	private boolean shouldNotify(RunsafePlayer player)
+	private boolean shouldNotify(IPlayer player)
 	{
 		return !notifiedPlayers.containsKey(player.getWorld().getName())
 			|| !notifiedPlayers.get(player.getWorld().getName()).contains(player.getName());
 	}
 
-	private void isNotified(RunsafePlayer player)
+	private void isNotified(IPlayer player)
 	{
 		if (!notifiedPlayers.containsKey(player.getWorld().getName()))
 			notifiedPlayers.put(player.getWorld().getName(), new ArrayList<String>());

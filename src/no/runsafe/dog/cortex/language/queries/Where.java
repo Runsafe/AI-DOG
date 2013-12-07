@@ -3,6 +3,7 @@ package no.runsafe.dog.cortex.language.queries;
 import no.runsafe.dog.cortex.language.ChatResponderRule;
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
@@ -20,11 +21,11 @@ public class Where extends ChatResponderRule implements IConfigurationChanged
 	@Override
 	public String getResponse(String player, Matcher message)
 	{
-		RunsafePlayer target = RunsafeServer.Instance.getPlayer(message.group(2).toLowerCase());
+		IPlayer target = RunsafeServer.Instance.getPlayer(message.group(2).toLowerCase());
 		if (!target.isOnline() || target.isVanished())
 			return null;
 
-		String worldName = target.getWorld().getName();
+		String worldName = target.getWorldName();
 		if (this.worldMessages.containsKey(worldName))
 			return String.format(this.worldMessages.get(worldName), target.getName());
 

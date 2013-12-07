@@ -4,9 +4,9 @@ import no.runsafe.dog.cortex.language.Speech;
 import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.event.player.IPlayerJoinEvent;
 import no.runsafe.framework.api.event.player.IPlayerPreLoginEvent;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerJoinEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerPreLoginEvent;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class PlayerLogin implements IPlayerPreLoginEvent, IPlayerJoinEvent
 	@Override
 	public void OnBeforePlayerLogin(RunsafePlayerPreLoginEvent event)
 	{
-		RunsafePlayer player = event.getPlayer();
+		IPlayer player = event.getPlayer();
 
 		if (player.isNew())
 			this.playersToWelcome.add(player.getName());

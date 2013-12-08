@@ -2,6 +2,7 @@ package no.runsafe.dog.cortex.memory;
 
 import no.runsafe.dog.cortex.language.ChatResponderRule;
 import no.runsafe.framework.api.IDebug;
+import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.database.IDatabase;
 import no.runsafe.framework.api.database.IRow;
 import no.runsafe.framework.api.database.ISet;
@@ -15,10 +16,11 @@ import java.util.regex.PatternSyntaxException;
 
 public class ChatTriggerRepository extends Repository
 {
-	public ChatTriggerRepository(IDatabase database, IDebug output)
+	public ChatTriggerRepository(IDatabase database, IDebug output, IServer server)
 	{
 		this.database = database;
 		this.debugger = output;
+		this.server = server;
 	}
 
 	@Override
@@ -65,8 +67,8 @@ public class ChatTriggerRepository extends Repository
 						row.String("pattern"),
 						row.String("reply"),
 						row.String("alternate"),
-						row.String("alternate_permission")
-					)
+						row.String("alternate_permission"),
+						server)
 				);
 				debugger.debugFine("Added pattern '%s'", row.String("pattern"));
 			}
@@ -84,4 +86,5 @@ public class ChatTriggerRepository extends Repository
 
 	private final IDatabase database;
 	private final IDebug debugger;
+	private final IServer server;
 }

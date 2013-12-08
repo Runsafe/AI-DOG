@@ -2,6 +2,7 @@ package no.runsafe.dog.cortex.language.queries;
 
 import no.runsafe.dog.cortex.language.ChatResponderRule;
 import no.runsafe.framework.api.IConfiguration;
+import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 
 import java.util.*;
@@ -9,9 +10,9 @@ import java.util.regex.Matcher;
 
 public class Compliment extends ChatResponderRule implements IConfigurationChanged
 {
-	public Compliment()
+	public Compliment(IServer server)
 	{
-		super("(?i).*(pretty|beautiful|awesome)\\s+dog", null, null, null);
+		super("(?i).*(pretty|beautiful|awesome)\\s+dog", null, null, null, server);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package no.runsafe.dog.cortex.language.queries;
 
 import no.runsafe.dog.cortex.language.ChatResponderRule;
+import no.runsafe.framework.api.IServer;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -9,9 +10,9 @@ import java.util.regex.Matcher;
 
 public class Calculate extends ChatResponderRule
 {
-	public Calculate()
+	public Calculate(IServer server)
 	{
-		super("(?i)^calculate\\s([0-9\\+\\-\\*/\\s\\(\\)\\.]+)$", null, null, null);
+		super("(?i)^calculate\\s([0-9\\+\\-\\*/\\s\\(\\)\\.]+)$", null, null, null, server);
 	}
 
 	@Override

@@ -1,15 +1,16 @@
 package no.runsafe.dog.cortex.language;
 
+import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.ai.IChatResponseTrigger;
-import no.runsafe.framework.minecraft.RunsafeServer;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChatResponderRule implements IChatResponseTrigger
 {
-	public ChatResponderRule(String pattern, String response, String alternate, String alternatePermission)
+	public ChatResponderRule(String pattern, String response, String alternate, String alternatePermission, IServer server)
 	{
+		this.server = server;
 		if (pattern == null)
 		{
 			this.rule = null;
@@ -29,7 +30,7 @@ public class ChatResponderRule implements IChatResponseTrigger
 	@Override
 	public String getResponse(String player, Matcher message)
 	{
-		if (alternatePermission != null && RunsafeServer.Instance.someoneHasPermission(alternatePermission))
+		if (alternatePermission != null && server.someoneHasPermission(alternatePermission))
 			return playerPattern.matcher(alternate).replaceAll(player);
 
 		return playerPattern.matcher(response).replaceAll(player);
@@ -45,5 +46,6 @@ public class ChatResponderRule implements IChatResponseTrigger
 	private final String alternate;
 	private final String alternatePermission;
 	private final Pattern rule;
+	private final IServer server;
 	private static final Pattern playerPattern = Pattern.compile("%player%");
 }

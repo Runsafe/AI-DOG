@@ -2,6 +2,7 @@ package no.runsafe.dog.cortex.language.queries;
 
 import no.runsafe.dog.cortex.language.ChatResponderRule;
 import no.runsafe.framework.api.IConfiguration;
+import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 
 import java.util.*;
@@ -9,9 +10,9 @@ import java.util.regex.Matcher;
 
 public class Insult extends ChatResponderRule implements IConfigurationChanged
 {
-	public Insult()
+	public Insult(IServer server)
 	{
-		super("(?i).*(darn|fuck|screw|damn)\\s(you\\s|off\\s|)dog.*", null, null, null);
+		super("(?i).*(darn|fuck|screw|damn)\\s(you\\s|off\\s|)dog.*", null, null, null, server);
 	}
 
 	@Override
@@ -20,7 +21,7 @@ public class Insult extends ChatResponderRule implements IConfigurationChanged
 		if (!playerHits.containsKey(player))
 		{
 			playerHits.put(player, 0);
-			return String.format("Well, this is out of the blue! You are just a %s, %s.",createInsult(), player);
+			return String.format("Well, this is out of the blue! You are just a %s, %s.", createInsult(), player);
 		}
 		else
 		{

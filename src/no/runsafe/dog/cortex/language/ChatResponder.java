@@ -4,11 +4,11 @@ import no.runsafe.dog.cortex.Subsystem;
 import no.runsafe.dog.cortex.memory.ChatTriggerRepository;
 import no.runsafe.framework.RunsafePlugin;
 import no.runsafe.framework.api.IConfiguration;
-import no.runsafe.framework.api.IDebug;
 import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.ai.IChatResponseTrigger;
 import no.runsafe.framework.api.event.player.IPlayerChatEvent;
 import no.runsafe.framework.api.event.plugin.IPluginEnabled;
+import no.runsafe.framework.api.log.IDebug;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerChatEvent;
 import no.runsafe.framework.timer.Worker;
 

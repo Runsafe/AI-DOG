@@ -1,12 +1,12 @@
 package no.runsafe.dog.cortex.memory;
 
 import no.runsafe.dog.cortex.language.ChatResponderRule;
-import no.runsafe.framework.api.IDebug;
 import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.database.IDatabase;
 import no.runsafe.framework.api.database.IRow;
 import no.runsafe.framework.api.database.ISet;
 import no.runsafe.framework.api.database.Repository;
+import no.runsafe.framework.api.log.IDebug;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -6,20 +6,21 @@ import no.runsafe.framework.api.database.IDatabase;
 import no.runsafe.framework.api.database.IRow;
 import no.runsafe.framework.api.database.ISet;
 import no.runsafe.framework.api.database.Repository;
+import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.log.IDebug;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.regex.PatternSyntaxException;
 
 public class ChatTriggerRepository extends Repository
 {
-	public ChatTriggerRepository(IDatabase database, IDebug output, IServer server)
+	public ChatTriggerRepository(IDatabase database, IDebug output, IConsole console, IServer server)
 	{
 		this.database = database;
 		this.debugger = output;
+		this.console = console;
 		this.server = server;
 	}
 
@@ -74,9 +75,8 @@ public class ChatTriggerRepository extends Repository
 			}
 			catch (PatternSyntaxException e)
 			{
-				debugger.writeColoured(
+				console.logWarning(
 					"Invalid regular expression '&e%1$s&r' - &c%2$s&r",
-					Level.WARNING,
 					e.getPattern(), e.getDescription()
 				);
 			}
@@ -86,5 +86,6 @@ public class ChatTriggerRepository extends Repository
 
 	private final IDatabase database;
 	private final IDebug debugger;
+	private final IConsole console;
 	private final IServer server;
 }

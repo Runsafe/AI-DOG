@@ -8,6 +8,7 @@ import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.ai.IChatResponseTrigger;
 import no.runsafe.framework.api.event.player.IPlayerChatEvent;
 import no.runsafe.framework.api.event.plugin.IPluginEnabled;
+import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.log.IDebug;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerChatEvent;
 import no.runsafe.framework.timer.Worker;
@@ -24,14 +25,15 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 		IScheduler scheduler,
 		ChatTriggerRepository repository,
 		Speech speechCenter,
-		IDebug output
-	)
+		IDebug output,
+		IConsole console)
 	{
 		super(scheduler);
 		this.scheduler = scheduler;
 		this.debugger = output;
 		this.chatTriggerRepository = repository;
 		this.speech = speechCenter;
+		this.console = console;
 		this.setInterval(10);
 	}
 
@@ -63,7 +65,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 			activeTriggers.addAll(staticResponders);
 		}
 
-		debugger.logInformation("Successfully loaded %d chat responders.", activeTriggers.size());
+		console.logInformation("Successfully loaded %d chat responders.", activeTriggers.size());
 
 		if (config == null)
 			return;
@@ -171,6 +173,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	private final ArrayList<IChatResponseTrigger> activeTriggers = new ArrayList<IChatResponseTrigger>();
 	private final Speech speech;
 	private final IDebug debugger;
+	private final IConsole console;
 	private final List<IChatResponseTrigger> staticResponders = new ArrayList<IChatResponseTrigger>();
 	private int ruleCooldown;
 	private int playerCooldown;

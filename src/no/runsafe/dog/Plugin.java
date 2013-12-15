@@ -11,12 +11,19 @@ import no.runsafe.dog.cortex.visual.Observer;
 import no.runsafe.dog.events.PlayerLogin;
 import no.runsafe.framework.RunsafeConfigurablePlugin;
 import no.runsafe.framework.api.command.Command;
+import no.runsafe.framework.features.Commands;
+import no.runsafe.framework.features.Events;
 
 public class Plugin extends RunsafeConfigurablePlugin
 {
 	@Override
 	protected void PluginSetup()
 	{
+		// Framework features
+		addComponent(Commands.class);
+		addComponent(Events.class);
+
+		// Plugin components
 		this.addComponent(DogBrain.class);
 		this.addComponent(ChatTriggerRepository.class);
 		this.addComponent(Speech.class);
@@ -32,6 +39,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(Insult.class);
 		this.addComponent(Compliment.class);
 
+		// Commands
 		Command dogCommand = new Command("dog", "Commands to control DOG", null);
 		dogCommand.addSubCommand(getInstance(ReloadCommand.class));
 		dogCommand.addSubCommand(getInstance(SpeakCommand.class));

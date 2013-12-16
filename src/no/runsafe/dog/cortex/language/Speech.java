@@ -42,5 +42,5 @@ public class Speech implements Subsystem
 	private final IServer server;
 	private RunsafeFakePlayer personality;
 	private String whisperFormat;
-	private IOutput output;
+	private final IOutput output;
 }

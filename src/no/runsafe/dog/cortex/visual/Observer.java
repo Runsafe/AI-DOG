@@ -33,25 +33,25 @@ public class Observer implements Subsystem, IPlayerInteractEvent
 	public void OnPlayerInteractEvent(RunsafePlayerInteractEvent event)
 	{
 		IPlayer player = event.getPlayer();
-		if (blockedMessages.containsKey(player.getWorld().getName()) && playerChecks.isGuest(player) && shouldNotify(player))
+		if (blockedMessages.containsKey(player.getWorldName()) && playerChecks.isGuest(player) && shouldNotify(player))
 		{
-			speech.Whisper(player, blockedMessages.get(player.getWorld().getName()));
+			speech.Whisper(player, blockedMessages.get(player.getWorldName()));
 			isNotified(player);
 		}
 	}
 
 	private boolean shouldNotify(IPlayer player)
 	{
-		return !notifiedPlayers.containsKey(player.getWorld().getName())
-			|| !notifiedPlayers.get(player.getWorld().getName()).contains(player.getName());
+		return !notifiedPlayers.containsKey(player.getWorldName())
+			|| !notifiedPlayers.get(player.getWorldName()).contains(player.getName());
 	}
 
 	private void isNotified(IPlayer player)
 	{
-		if (!notifiedPlayers.containsKey(player.getWorld().getName()))
-			notifiedPlayers.put(player.getWorld().getName(), new ArrayList<String>());
-		if (!notifiedPlayers.get(player.getWorld().getName()).contains(player.getName()))
-			notifiedPlayers.get(player.getWorld().getName()).add(player.getName());
+		if (!notifiedPlayers.containsKey(player.getWorldName()))
+			notifiedPlayers.put(player.getWorldName(), new ArrayList<String>());
+		if (!notifiedPlayers.get(player.getWorldName()).contains(player.getName()))
+			notifiedPlayers.get(player.getWorldName()).add(player.getName());
 	}
 
 	private final PlayerChecks playerChecks;

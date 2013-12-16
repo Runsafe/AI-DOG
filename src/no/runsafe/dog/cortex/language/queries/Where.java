@@ -22,7 +22,7 @@ public class Where extends ChatResponderRule implements IConfigurationChanged
 	public String getResponse(String player, Matcher message)
 	{
 		IPlayer target = server.getPlayer(message.group(2).toLowerCase());
-		if (!target.isOnline() || target.isVanished())
+		if (target == null || !target.isOnline() || target.isVanished())
 			return null;
 
 		String worldName = target.getWorldName();

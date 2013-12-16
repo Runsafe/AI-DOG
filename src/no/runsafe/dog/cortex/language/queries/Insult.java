@@ -65,7 +65,7 @@ public class Insult extends ChatResponderRule implements IConfigurationChanged
 		return insult.toString().trim();
 	}
 
-	private List<List<String>> insultTiers = new ArrayList<List<String>>();
-	private Random random = new Random();
-	private HashMap<String, Integer> playerHits = new HashMap<String, Integer>();
+	private final List<List<String>> insultTiers = new ArrayList<List<String>>();
+	private final Random random = new Random();
+	private final HashMap<String, Integer> playerHits = new HashMap<String, Integer>();
 }

@@ -78,7 +78,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	@Override
 	public void OnPlayerChatEvent(RunsafePlayerChatEvent event)
 	{
-		if (event.getPlayer() == null || dogName.equals(event.getPlayer().getName()))
+		if (event.isCancelled() || event.getPlayer() == null || dogName.equals(event.getPlayer().getName()))
 			return;
 		final String message = event.getMessage();
 		final String player = event.getPlayer().getName();

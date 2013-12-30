@@ -23,7 +23,7 @@ public class Doge extends ChatResponderRule
 		phraseBin.addAll(phrases);
 
 		List<String> responses = new ArrayList<String>(0);
-		String[] words = message.group(1).trim().toLowerCase().split("\\s+");
+		String[] words = message.group(1).trim().toLowerCase().replaceAll("[^a-zA-Z0-9\\s]", "").split("\\s+");
 
 		for (String word : words)
 		{

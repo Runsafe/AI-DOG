@@ -19,6 +19,7 @@ public class Doge extends ChatResponderRule
 	@Override
 	public String getResponse(String player, Matcher message)
 	{
+		boolean hasWow = false;
 		List<String> phraseBin = new ArrayList<String>();
 		phraseBin.addAll(phrases);
 
@@ -33,6 +34,11 @@ public class Doge extends ChatResponderRule
 				if (newPhrase == null) break;
 
 				responses.add(newPhrase + ' ' + word + '.');
+			}
+			else if (!hasWow)
+			{
+				hasWow = true;
+				responses.add("wow.");
 			}
 		}
 

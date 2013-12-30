@@ -38,6 +38,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(Where.class);
 		this.addComponent(Insult.class);
 		this.addComponent(Compliment.class);
+		this.addComponent(Doge.class);
 
 		// Commands
 		Command dogCommand = new Command("dog", "Commands to control DOG", null);

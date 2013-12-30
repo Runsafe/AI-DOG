@@ -68,6 +68,7 @@ public class Doge extends ChatResponderRule
 		excludedWords.add("from");
 		excludedWords.add("have");
 		excludedWords.add("what");
+		excludedWords.add("this");
 	}
 
 	static

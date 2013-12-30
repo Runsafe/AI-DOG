@@ -47,7 +47,12 @@ public class Doge extends ChatResponderRule
 		if (phraseBin.isEmpty())
 			return null;
 
-		return phraseBin.get(random.nextInt(phraseBin.size()));
+		int randomIndex = random.nextInt(phraseBin.size());
+		String phrase = phraseBin.get(randomIndex);
+
+		phraseBin.remove(randomIndex);
+
+		return phrase;
 	}
 
 	private final Random random = new Random();

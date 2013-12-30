@@ -13,7 +13,7 @@ public class Doge extends ChatResponderRule
 {
 	public Doge(IServer server)
 	{
-		super("(?i)#doge$", null, null, null, server);
+		super("(?i)(.*)#doge$", null, null, null, server);
 	}
 
 	@Override

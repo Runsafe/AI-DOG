@@ -54,7 +54,7 @@ public class ChatTriggerRepository extends Repository
 
 	public List<ChatResponderRule> getRules()
 	{
-		ISet data = this.database.Query("SELECT pattern,reply,alternate,alternate_permission FROM ai_dog");
+		ISet data = database.query("SELECT pattern,reply,alternate,alternate_permission FROM ai_dog");
 		if (data.isEmpty())
 			return null;
 

@@ -26,26 +26,26 @@ public class Plugin extends RunsafeConfigurablePlugin
 		addComponent(Database.class);
 
 		// Plugin components
-		this.addComponent(DogBrain.class);
-		this.addComponent(ChatTriggerRepository.class);
-		this.addComponent(Speech.class);
-		this.addComponent(ChatResponder.class);
-		this.addComponent(PlayerChecks.class);
-		this.addComponent(Observer.class);
-		this.addComponent(PlayerLogin.class);
+		addComponent(DogBrain.class);
+		addComponent(ChatTriggerRepository.class);
+		addComponent(Speech.class);
+		addComponent(ChatResponder.class);
+		addComponent(PlayerChecks.class);
+		addComponent(Observer.class);
+		addComponent(PlayerLogin.class);
 
 		// Chat responder rules
-		this.addComponent(Seen.class);
-		this.addComponent(Calculate.class);
-		this.addComponent(Where.class);
-		this.addComponent(Insult.class);
-		this.addComponent(Compliment.class);
-		this.addComponent(Doge.class);
+		addComponent(Seen.class);
+		addComponent(Calculate.class);
+		addComponent(Where.class);
+		addComponent(Insult.class);
+		addComponent(Compliment.class);
+		addComponent(Doge.class);
 
 		// Commands
 		Command dogCommand = new Command("dog", "Commands to control DOG", null);
 		dogCommand.addSubCommand(getInstance(ReloadCommand.class));
 		dogCommand.addSubCommand(getInstance(SpeakCommand.class));
-		this.addComponent(dogCommand);
+		addComponent(dogCommand);
 	}
 }

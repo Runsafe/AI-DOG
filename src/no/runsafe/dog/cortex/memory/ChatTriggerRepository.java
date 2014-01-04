@@ -36,10 +36,10 @@ public class ChatTriggerRepository extends Repository
 		HashMap<Integer, List<String>> queries = new HashMap<Integer, List<String>>();
 		ArrayList<String> sql = new ArrayList<String>();
 		sql.add(
-			"CREATE TABLE ai_dog (" +
+			"CREATE TABLE `ai_dog` (" +
 				"`pattern` varchar(255) NOT NULL," +
 				"`reply` varchar(255) NOT NULL" +
-				")"
+			')'
 		);
 		queries.put(1, sql);
 		sql = new ArrayList<String>();

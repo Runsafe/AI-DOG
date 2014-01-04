@@ -11,6 +11,7 @@ import no.runsafe.framework.api.log.IDebug;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
@@ -33,7 +34,7 @@ public class ChatTriggerRepository extends Repository
 	@Override
 	public HashMap<Integer, List<String>> getSchemaUpdateQueries()
 	{
-		HashMap<Integer, List<String>> queries = new HashMap<Integer, List<String>>(3);
+		HashMap<Integer, List<String>> queries = new LinkedHashMap<Integer, List<String>>(3);
 		ArrayList<String> sql = new ArrayList<String>(1);
 		sql.add(
 			"CREATE TABLE `ai_dog` (" +

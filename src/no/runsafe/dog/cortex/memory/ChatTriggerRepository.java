@@ -34,7 +34,7 @@ public class ChatTriggerRepository extends Repository
 	public HashMap<Integer, List<String>> getSchemaUpdateQueries()
 	{
 		HashMap<Integer, List<String>> queries = new HashMap<Integer, List<String>>(3);
-		ArrayList<String> sql = new ArrayList<String>();
+		ArrayList<String> sql = new ArrayList<String>(1);
 		sql.add(
 			"CREATE TABLE `ai_dog` (" +
 				"`pattern` varchar(255) NOT NULL," +
@@ -42,11 +42,11 @@ public class ChatTriggerRepository extends Repository
 			')'
 		);
 		queries.put(1, sql);
-		sql = new ArrayList<String>();
+		sql = new ArrayList<String>(2);
 		sql.add("ALTER TABLE ai_dog ADD COLUMN alternate varchar(255) NULL");
 		sql.add("ALTER TABLE ai_dog ADD COLUMN alternate_permission varchar(255) NULL");
 		queries.put(2, sql);
-		sql = new ArrayList<String>();
+		sql = new ArrayList<String>(1);
 		sql.add("ALTER TABLE `ai_dog` ADD COLUMN `ID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`ID`)");
 		queries.put(3, sql);
 		return queries;

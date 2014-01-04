@@ -33,7 +33,7 @@ public class ChatTriggerRepository extends Repository
 	@Override
 	public HashMap<Integer, List<String>> getSchemaUpdateQueries()
 	{
-		HashMap<Integer, List<String>> queries = new HashMap<Integer, List<String>>();
+		HashMap<Integer, List<String>> queries = new HashMap<Integer, List<String>>(3);
 		ArrayList<String> sql = new ArrayList<String>();
 		sql.add(
 			"CREATE TABLE `ai_dog` (" +

@@ -2,16 +2,11 @@ package no.runsafe.dog.cortex.memory;
 
 import no.runsafe.dog.cortex.language.ChatResponderRule;
 import no.runsafe.framework.api.IServer;
-import no.runsafe.framework.api.database.IDatabase;
-import no.runsafe.framework.api.database.IRow;
-import no.runsafe.framework.api.database.ISet;
-import no.runsafe.framework.api.database.Repository;
+import no.runsafe.framework.api.database.*;
 import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.log.IDebug;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
@@ -32,28 +27,27 @@ public class ChatTriggerRepository extends Repository
 	}
 
 	@Override
-	public HashMap<Integer, List<String>> getSchemaUpdateQueries()
+	public ISchemaUpdate getSchemaUpdateQueries()
 	{
-		HashMap<Integer, List<String>> queries = new LinkedHashMap<Integer, List<String>>(3);
-		ArrayList<String> sql = new ArrayList<String>(1);
-		sql.add(
+		ISchemaUpdate update = new SchemaUpdate();
+
+		update.addQueries(
 			"CREATE TABLE `ai_dog` (" +
 				"`pattern` varchar(255) NOT NULL," +
 				"`reply` varchar(255) NOT NULL" +
 			')'
 		);
-		queries.put(1, sql);
 
-		sql = new ArrayList<String>(2);
-		sql.add("ALTER TABLE ai_dog ADD COLUMN alternate varchar(255) NULL");
-		sql.add("ALTER TABLE ai_dog ADD COLUMN alternate_permission varchar(255) NULL");
-		queries.put(2, sql);
+		update.addQueries(
+			"ALTER TABLE ai_dog ADD COLUMN alternate varchar(255) NULL",
+				"ALTER TABLE ai_dog ADD COLUMN alternate_permission varchar(255) NULL"
+		);
 
-		sql = new ArrayList<String>(1);
-		sql.add("ALTER TABLE `ai_dog` ADD COLUMN `ID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`ID`)");
-		queries.put(3, sql);
+		update.addQueries(
+			"ALTER TABLE `ai_dog` ADD COLUMN `ID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`ID`)"
+		);
 
-		return queries;
+		return update;
 	}
 
 	public List<ChatResponderRule> getRules()

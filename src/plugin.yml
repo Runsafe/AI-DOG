@@ -1,5 +1,5 @@
 name: DOG
-main: no.runsafe.dog.Plugin
+main: no.runsafe.dog.DOGPlugin
 version: 1.1.@BUILD@
 author: Kruithne
 authors: [mortenn]

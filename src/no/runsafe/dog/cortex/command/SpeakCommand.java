@@ -3,9 +3,8 @@ package no.runsafe.dog.cortex.command;
 import no.runsafe.dog.cortex.language.Speech;
 import no.runsafe.framework.api.command.ExecutableCommand;
 import no.runsafe.framework.api.command.ICommandExecutor;
+import no.runsafe.framework.api.command.argument.IArgumentList;
 import no.runsafe.framework.api.command.argument.TrailingArgument;
-
-import java.util.Map;
 
 public class SpeakCommand extends ExecutableCommand
 {
@@ -16,7 +15,7 @@ public class SpeakCommand extends ExecutableCommand
 	}
 
 	@Override
-	public String OnExecute(ICommandExecutor executor, Map<String, String> parameters)
+	public String OnExecute(ICommandExecutor executor, IArgumentList parameters)
 	{
 		speech.Speak(parameters.get("message"));
 		return "DOG has been commanded. Please use AI puppeteering sparingly.";

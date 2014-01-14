@@ -4,8 +4,7 @@ import no.runsafe.dog.DogBrain;
 import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.command.AsyncCommand;
 import no.runsafe.framework.api.command.ICommandExecutor;
-
-import java.util.Map;
+import no.runsafe.framework.api.command.argument.IArgumentList;
 
 public class ReloadCommand extends AsyncCommand
 {
@@ -16,7 +15,7 @@ public class ReloadCommand extends AsyncCommand
 	}
 
 	@Override
-	public String OnAsyncExecute(ICommandExecutor executor, Map<String, String> parameters)
+	public String OnAsyncExecute(ICommandExecutor executor, IArgumentList parameters)
 	{
 		dog.OnConfigurationChanged(null);
 		return "DOG has been reloaded.";

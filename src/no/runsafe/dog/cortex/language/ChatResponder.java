@@ -8,7 +8,6 @@ import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.ai.IChatResponseTrigger;
 import no.runsafe.framework.api.event.IServerReady;
 import no.runsafe.framework.api.event.player.IPlayerChatEvent;
-import no.runsafe.framework.api.event.plugin.IPluginEnabled;
 import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.log.IDebug;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerChatEvent;
@@ -41,18 +40,9 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	@Override
 	public void OnServerReady()
 	{
-		scheduler.startSyncTask(
-			new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					staticResponders.addAll(RunsafePlugin.getPluginAPI(IChatResponseTrigger.class));
-					activeTriggers.addAll(staticResponders);
-				}
-			},
-			0
-		);
+		staticResponders.addAll(RunsafePlugin.getPluginAPI(IChatResponseTrigger.class));
+		console.logInformation("Added %d static chat responders.", staticResponders.size());
+		activeTriggers.addAll(staticResponders);
 	}
 
 	@Override

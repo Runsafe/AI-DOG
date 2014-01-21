@@ -6,6 +6,7 @@ import no.runsafe.framework.RunsafePlugin;
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.ai.IChatResponseTrigger;
+import no.runsafe.framework.api.event.IServerReady;
 import no.runsafe.framework.api.event.player.IPlayerChatEvent;
 import no.runsafe.framework.api.event.plugin.IPluginEnabled;
 import no.runsafe.framework.api.log.IConsole;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 
-public class ChatResponder extends Worker<String, String> implements Runnable, Subsystem, IPlayerChatEvent, IPluginEnabled
+public class ChatResponder extends Worker<String, String> implements Runnable, Subsystem, IPlayerChatEvent, IServerReady
 {
 	public ChatResponder(
 		IScheduler scheduler,
@@ -38,7 +39,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	}
 
 	@Override
-	public void OnPluginEnabled()
+	public void OnServerReady()
 	{
 		scheduler.startSyncTask(
 			new Runnable()

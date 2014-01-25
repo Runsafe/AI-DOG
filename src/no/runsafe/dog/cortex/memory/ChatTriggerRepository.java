@@ -12,9 +12,8 @@ import java.util.regex.PatternSyntaxException;
 
 public class ChatTriggerRepository extends Repository
 {
-	public ChatTriggerRepository(IDatabase database, IDebug output, IConsole console, IServer server)
+	public ChatTriggerRepository(IDebug output, IConsole console, IServer server)
 	{
-		this.database = database;
 		this.debugger = output;
 		this.console = console;
 		this.server = server;
@@ -82,7 +81,6 @@ public class ChatTriggerRepository extends Repository
 		return rules;
 	}
 
-	private final IDatabase database;
 	private final IDebug debugger;
 	private final IConsole console;
 	private final IServer server;

@@ -41,6 +41,7 @@ public class DOGPlugin extends RunsafeConfigurablePlugin
 		addComponent(Insult.class);
 		addComponent(Compliment.class);
 		addComponent(Doge.class);
+		addComponent(Clan.class);
 
 		// Commands
 		Command dogCommand = new Command("dog", "Commands to control DOG", null);

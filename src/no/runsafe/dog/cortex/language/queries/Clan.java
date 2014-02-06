@@ -25,7 +25,7 @@ public class Clan extends ChatResponderRule
 			if (data.containsKey("runsafe.clans.clan"))
 				return String.format(
 						"%s has been a member of the %s clan for %s.",
-						targetPlayer.getName(),
+						targetPlayer.getPrettyName(),
 						data.get("runsafe.clans.clan"),
 						data.get("runsafe.clans.joined")
 				);

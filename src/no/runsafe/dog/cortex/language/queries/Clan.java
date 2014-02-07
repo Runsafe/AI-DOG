@@ -23,13 +23,17 @@ public class Clan extends ChatResponderRule
 		{
 			Map<String, String> data = targetPlayer.getData();
 			if (data.containsKey("runsafe.clans.clan"))
-				return String.format(
-						"%s has been a member of the %s clan for %s.",
-						targetPlayer.getPrettyName(),
-						data.get("runsafe.clans.clan"),
-						data.get("runsafe.clans.joined")
-				);
+			{
+				String clanName = data.get("runsafe.clans.clan");
 
+				if (!clanName.equals("None"))
+					return String.format(
+							"%s has been a member of the %s clan for %s.",
+							targetPlayer.getPrettyName(),
+							data.get("runsafe.clans.clan"),
+							data.get("runsafe.clans.joined")
+					);
+			}
 		}
 		return null;
 	}

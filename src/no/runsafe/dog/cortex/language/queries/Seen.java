@@ -14,7 +14,7 @@ public class Seen extends ChatResponderRule
 {
 	public Seen(IServer server)
 	{
-		super("(?i).*(has.*seen|have.*seen|when.*was) ([a-zA-Z0-9_-]+).*", null, null, null, server);
+		super("(?i).*(has.*seen|have.*seen|when.*was) ([a-zA-Z0-9_-]+).*", null, null, null, null, server);
 		this.server = server;
 	}
 

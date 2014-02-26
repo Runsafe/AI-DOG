@@ -46,6 +46,8 @@ public class ChatTriggerRepository extends Repository
 			"ALTER TABLE `ai_dog` ADD COLUMN `ID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`ID`)"
 		);
 
+		update.addQueries("ALTER TABLE `ai_dog` ADD COLUMN `trigger_permission` VARCHAR(255) NULL");
+
 		return update;
 	}
 
@@ -66,6 +68,7 @@ public class ChatTriggerRepository extends Repository
 						row.String("reply"),
 						row.String("alternate"),
 						row.String("alternate_permission"),
+						row.String("trigger_permission"),
 						server)
 				);
 				debugger.debugFine("Added pattern '%s'", row.String("pattern"));

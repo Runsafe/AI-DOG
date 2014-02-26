@@ -12,7 +12,7 @@ public class Insult extends ChatResponderRule implements IConfigurationChanged
 {
 	public Insult(IServer server)
 	{
-		super("(?i).*(darn|fuck|screw|damn)\\s(you\\s|off\\s|)dog.*", null, null, null, server);
+		super("(?i).*(darn|fuck|screw|damn)\\s(you\\s|off\\s|)dog.*", null, null, null, null, server);
 	}
 
 	@Override

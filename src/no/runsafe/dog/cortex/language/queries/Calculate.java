@@ -12,7 +12,7 @@ public class Calculate extends ChatResponderRule
 {
 	public Calculate(IServer server)
 	{
-		super("(?i)^calculate\\s([0-9\\+\\-\\*/\\s\\(\\)\\.]+)$", null, null, null, server);
+		super("(?i)^calculate\\s([0-9\\+\\-\\*/\\s\\(\\)\\.]+)$", null, null, null, null, server);
 	}
 
 	@Override

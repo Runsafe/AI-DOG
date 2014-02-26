@@ -14,7 +14,7 @@ public class Where extends ChatResponderRule implements IConfigurationChanged
 {
 	public Where(IServer server)
 	{
-		super("(?i).*(where\\sis\\s)([a-zA-Z0-9_-]+).*", null, null, null, server);
+		super("(?i).*(where\\sis\\s)([a-zA-Z0-9_-]+).*", null, null, null, null, server);
 		this.server = server;
 	}
 

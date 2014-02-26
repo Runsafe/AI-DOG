@@ -11,7 +11,7 @@ public class Clan extends ChatResponderRule
 {
 	public Clan(IServer server)
 	{
-		super("(?i).*(which|what)\\s+clan\\s+is\\s+([a-zA-Z0-9_-]+).*", null, null, null, server);
+		super("(?i).*(which|what)\\s+clan\\s+is\\s+([a-zA-Z0-9_-]+).*", null, null, null, null, server);
 		this.server = server;
 	}
 

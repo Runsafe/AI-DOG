@@ -12,7 +12,7 @@ public class Compliment extends ChatResponderRule implements IConfigurationChang
 {
 	public Compliment(IServer server)
 	{
-		super("(?i).*(pretty|beautiful|awesome)\\s+dog", null, null, null, server);
+		super("(?i).*(pretty|beautiful|awesome)\\s+dog", null, null, null, null, server);
 	}
 
 	@Override

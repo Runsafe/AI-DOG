@@ -45,7 +45,7 @@ public class PlayerLogin implements IPlayerPreLoginEvent, IPlayerJoinEvent
 
 	private void welcomePlayer(String playerName)
 	{
-		this.speechCenter.Speak(String.format("Welcome to the server, %s.", playerName), message.channel);
+		this.speechCenter.Speak(String.format("Welcome to the server, %s.", playerName));
 		this.playersToWelcome.remove(playerName);
 	}
 

@@ -11,6 +11,7 @@ import no.runsafe.framework.api.event.IServerReady;
 import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.log.IDebug;
 import no.runsafe.framework.timer.Worker;
+import no.runsafe.nchat.channel.IChannelManager;
 import no.runsafe.nchat.channel.IChatChannel;
 import no.runsafe.nchat.channel.IChatResponder;
 
@@ -39,7 +40,7 @@ public class ChatResponder extends Worker<String, ChatResponder.ChannelMessage> 
 		ChatTriggerRepository repository,
 		Speech speechCenter,
 		IDebug output,
-		IConsole console)
+		IConsole console, IChannelManager manager)
 	{
 		super(scheduler);
 		this.scheduler = scheduler;
@@ -47,6 +48,7 @@ public class ChatResponder extends Worker<String, ChatResponder.ChannelMessage> 
 		this.chatTriggerRepository = repository;
 		this.speech = speechCenter;
 		this.console = console;
+		this.manager = manager;
 		this.setInterval(10);
 	}
 
@@ -55,6 +57,7 @@ public class ChatResponder extends Worker<String, ChatResponder.ChannelMessage> 
 	{
 		staticResponders.addAll(RunsafePlugin.getPluginAPI(IChatResponseTrigger.class));
 		console.logInformation("Added %d static chat responders.", staticResponders.size());
+		manager.registerResponderHook(this);
 		activeTriggers.addAll(staticResponders);
 	}
 
@@ -157,6 +160,7 @@ public class ChatResponder extends Worker<String, ChatResponder.ChannelMessage> 
 	private final IDebug debugger;
 	private final IConsole console;
 	private final List<IChatResponseTrigger> staticResponders = new ArrayList<IChatResponseTrigger>();
+	private final IChannelManager manager;
 	private int ruleCooldown;
 	private int playerCooldown;
 	private String dogName;

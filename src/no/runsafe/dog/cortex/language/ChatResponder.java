@@ -6,12 +6,13 @@ import no.runsafe.framework.RunsafePlugin;
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.ai.IChatResponseTrigger;
+import no.runsafe.framework.api.command.ICommandExecutor;
 import no.runsafe.framework.api.event.IServerReady;
-import no.runsafe.framework.api.event.player.IPlayerChatEvent;
 import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.log.IDebug;
-import no.runsafe.framework.minecraft.event.player.RunsafePlayerChatEvent;
 import no.runsafe.framework.timer.Worker;
+import no.runsafe.nchat.channel.IChatChannel;
+import no.runsafe.nchat.channel.IChatResponder;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,8 +20,20 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 
-public class ChatResponder extends Worker<String, String> implements Runnable, Subsystem, IPlayerChatEvent, IServerReady
+public class ChatResponder extends Worker<String, ChatResponder.ChannelMessage> implements Runnable, Subsystem, IChatResponder, IServerReady
 {
+	public class ChannelMessage
+	{
+		IChatChannel channel;
+		String message;
+
+		public ChannelMessage(IChatChannel channel, String message)
+		{
+			this.channel = channel;
+			this.message = message;
+		}
+	}
+
 	public ChatResponder(
 		IScheduler scheduler,
 		ChatTriggerRepository repository,
@@ -67,45 +80,23 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 	}
 
 	@Override
-	public void OnPlayerChatEvent(RunsafePlayerChatEvent event)
+	public void processChatMessage(final IChatChannel channel, final ICommandExecutor player, final String message)
 	{
-		if (event.isCancelled() || event.getPlayer() == null || dogName.equals(event.getPlayer().getName()))
+		if (player.getName().equals(dogName))
 			return;
-		final String message = event.getMessage();
-		final String player = event.getPlayer().getName();
-		final int task = scheduler.startSyncTask(
-			new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					debugger.debugFiner(String.format("Receiving message '%s' from %s", message, player));
-					Push(player, message);
-				}
-			},
-			10L
-		);
-		event.addCancellationHandle(
-			new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					scheduler.cancelTask(task);
-				}
-			}
-		);
+		debugger.debugFiner(String.format("Receiving message '%s' from %s", message, player));
+		Push(player.getName(), new ChannelMessage(channel, message));
 	}
 
 	@Override
-	public void process(String player, String message)
+	public void process(String player, ChannelMessage message)
 	{
 		debugger.debugFiner(String.format("Checking message '%s' from '%s'", message, player));
 
 		if (isPlayerOffCooldown(player))
 			for (IChatResponseTrigger rule : activeTriggers)
 			{
-				Matcher matcher = rule.getRule().matcher(message);
+				Matcher matcher = rule.getRule().matcher(message.message);
 				if (!matcher.matches())
 					continue;
 				String response = rule.getResponse(player, matcher);
@@ -114,7 +105,7 @@ public class ChatResponder extends Worker<String, String> implements Runnable, S
 					applyRuleCooldown(rule);
 					applyPlayerCooldown(player);
 					debugger.debugFine(String.format("Sending response '%s'", response));
-					speech.Speak(response);
+					speech.Speak(response, message.channel);
 					break;
 				}
 			}

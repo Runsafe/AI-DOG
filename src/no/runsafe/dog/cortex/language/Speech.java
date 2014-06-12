@@ -5,6 +5,7 @@ import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.player.RunsafeFakePlayer;
+import no.runsafe.nchat.channel.IChatChannel;
 
 public class Speech implements Subsystem
 {
@@ -24,6 +25,11 @@ public class Speech implements Subsystem
 		);
 		personality.setWorld(server.getWorld(configuration.getConfigValueAsString("world")));
 		whisperFormat = configuration.getConfigValueAsString("whisper");
+	}
+
+	public void Speak(String message, IChatChannel channel)
+	{
+		channel.Send(new DogChatResponseEvent(personality, message));
 	}
 
 	public void Speak(String message)

@@ -9,4 +9,10 @@ public class DogChatResponseEvent extends RunsafePlayerFakeChatEvent
 	{
 		super(player, message);
 	}
+
+	@Override
+	public boolean isFake()
+	{
+		return true;
+	}
 }

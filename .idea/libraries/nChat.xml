@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="nChat">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../out/nChat.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../nChat/src" />
+    </SOURCES>
+  </library>
+</component>

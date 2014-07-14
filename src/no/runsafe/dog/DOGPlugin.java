@@ -36,12 +36,13 @@ public class DOGPlugin extends RunsafeConfigurablePlugin
 
 		// Chat responder rules
 		addComponent(Seen.class);
-		addComponent(Calculate.class);
+		addComponent(Time.class);
 		addComponent(Where.class);
 		addComponent(Insult.class);
 		addComponent(Compliment.class);
 		addComponent(Doge.class);
 		addComponent(Clan.class);
+		addComponent(Time.class);
 
 		// Commands
 		Command dogCommand = new Command("dog", "Commands to control DOG", null);

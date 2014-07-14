@@ -21,7 +21,7 @@ public class Time extends ChatResponderRule
 		String timezone = message.group(1);
 		DateTime now = DateTime.now(DateTimeZone.forTimeZone(TimeZone.getTimeZone(timezone)));
 		return String.format(
-				"The time is %02d:%02d in %s",
+				"The time is %02d:%02d in %s.",
 				Integer.parseInt(now.hourOfDay().getAsText()),
 				Integer.parseInt(now.minuteOfHour().getAsText()),
 				timezone

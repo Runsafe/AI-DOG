@@ -20,7 +20,7 @@ public class Time extends ChatResponderRule
 	public String getResponse(String player, Matcher message)
 	{
 		String timezone = message.group(1);
-		DateTime now =  new LocalDateTime(DateTimeZone.UTC).toDateTime(DateTimeZone.forTimeZone(TimeZone.getTimeZone(timezone)));
+		DateTime now = new LocalDateTime(DateTimeZone.UTC).toDateTime(DateTimeZone.forTimeZone(TimeZone.getTimeZone(timezone)));
 		return String.format("The time is %s:%s in %s", now.hourOfDay().getAsText(), now.minuteOfHour().getAsText(), timezone);
 	}
 }

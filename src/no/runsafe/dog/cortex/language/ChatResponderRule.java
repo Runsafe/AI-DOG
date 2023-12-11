@@ -19,15 +19,14 @@ public class ChatResponderRule implements IChatResponseTrigger
 			this.alternate = null;
 			this.alternatePermission = null;
 			this.triggerPermission = null;
+			return;
 		}
-		else
-		{
-			this.rule = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
-			this.response = response;
-			this.alternate = alternate;
-			this.alternatePermission = alternatePermission;
-			this.triggerPermission = triggerPermission;
-		}
+
+		this.rule = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
+		this.response = response;
+		this.alternate = alternate;
+		this.alternatePermission = alternatePermission;
+		this.triggerPermission = triggerPermission;
 	}
 
 	@Override

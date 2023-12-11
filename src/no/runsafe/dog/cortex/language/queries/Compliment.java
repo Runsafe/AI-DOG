@@ -23,21 +23,17 @@ public class Compliment extends ChatResponderRule implements IConfigurationChang
 			playerHits.put(player, 0);
 			return String.format("Hello %s, you are a %s!", player, this.createCompliment());
 		}
-		else
-		{
-			int hits = playerHits.get(player);
 
-			if (hits == 4)
-			{
-				playerHits.put(player, 0);
-				return String.format("%s, you are a really nice friend but we need to see other people.", player);
-			}
-			else
-			{
-				playerHits.put(player, playerHits.get(player) + 1);
-				return String.format("Thanks %s, you are a %s.", player, this.createCompliment());
-			}
+		int hits = playerHits.get(player);
+
+		if (hits == 4)
+		{
+			playerHits.put(player, 0);
+			return String.format("%s, you are a really nice friend but we need to see other people.", player);
 		}
+
+		playerHits.put(player, playerHits.get(player) + 1);
+		return String.format("Thanks %s, you are a %s.", player, this.createCompliment());
 	}
 
 	@Override
@@ -45,10 +41,8 @@ public class Compliment extends ChatResponderRule implements IConfigurationChang
 	{
 		this.complimentTiers.clear();
 
-		List<String> sortOrder = new ArrayList<String>();
 		Map<String, List<String>> compliments = configuration.getConfigSectionsAsList("compliments");
-
-		sortOrder.addAll(compliments.keySet());
+		List<String> sortOrder = new ArrayList<>(compliments.keySet());
 		Collections.sort(sortOrder);
 
 		for (String tier : sortOrder)
@@ -65,7 +59,7 @@ public class Compliment extends ChatResponderRule implements IConfigurationChang
 		return insult.toString().trim();
 	}
 
-	private final List<List<String>> complimentTiers = new ArrayList<List<String>>();
+	private final List<List<String>> complimentTiers = new ArrayList<>();
 	private final Random random = new Random();
-	private final HashMap<String, Integer> playerHits = new HashMap<String, Integer>();
+	private final HashMap<String, Integer> playerHits = new HashMap<>();
 }

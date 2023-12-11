@@ -23,7 +23,7 @@ import java.util.regex.Matcher;
 
 public class ChatResponder extends Worker<String, ChatResponder.ChannelMessage> implements Runnable, Subsystem, IChatResponder, IServerReady
 {
-	public class ChannelMessage
+	public static class ChannelMessage
 	{
 		IChatChannel channel;
 		String message;
@@ -96,35 +96,38 @@ public class ChatResponder extends Worker<String, ChatResponder.ChannelMessage> 
 	{
 		debugger.debugFiner(String.format("Checking message '%s' from '%s'", message, player));
 
-		if (isPlayerOffCooldown(player))
-			for (IChatResponseTrigger rule : activeTriggers)
-			{
-				Matcher matcher = rule.getRule().matcher(message.message);
-				if (!matcher.matches())
-					continue;
-				String response = rule.getResponse(player, matcher);
-				if (response != null)
-				{
-					applyRuleCooldown(rule);
-					applyPlayerCooldown(player);
-					debugger.debugFine(String.format("Sending response '%s'", response));
-					speech.Speak(response, message.channel);
-					break;
-				}
-			}
+		if (!isPlayerOffCooldown(player))
+			return;
+
+		for (IChatResponseTrigger rule : activeTriggers)
+		{
+			Matcher matcher = rule.getRule().matcher(message.message);
+			if (!matcher.matches())
+				continue;
+			String response = rule.getResponse(player, matcher);
+			if (response == null)
+				continue;
+			applyRuleCooldown(rule);
+			applyPlayerCooldown(player);
+			debugger.debugFine(String.format("Sending response '%s'", response));
+			speech.Speak(response, message.channel);
+			break;
+		}
 	}
 
 	private boolean isPlayerOffCooldown(String player)
 	{
-		if (playerCooldown > 0 && playerCooldowns.containsKey(player))
+		if (playerCooldown <= 0 || !playerCooldowns.containsKey(player))
+			return true;
+
+		if (playerCooldowns.get(player) < new Date().getTime())
 		{
-			debugger.debugFine("Player is on cooldown.");
-			if (playerCooldowns.get(player) < new Date().getTime())
-				playerCooldowns.remove(player);
-			else
-				return false;
+			playerCooldowns.remove(player);
+			return true;
 		}
-		return true;
+
+		debugger.debugFine("Player is on cooldown.");
+		return false;
 	}
 
 	private void applyRuleCooldown(final IChatResponseTrigger rule)
@@ -132,14 +135,10 @@ public class ChatResponder extends Worker<String, ChatResponder.ChannelMessage> 
 		if (ruleCooldown > 0)
 		{
 			debugger.debugFine("Putting rule on cooldown");
-			Runnable callback = new Runnable()
+			Runnable callback = () ->
 			{
-				@Override
-				public void run()
-				{
-					if (!activeTriggers.contains(rule))
-						activeTriggers.add(rule);
-				}
+				if (!activeTriggers.contains(rule))
+					activeTriggers.add(rule);
 			};
 			activeTriggers.remove(rule);
 			scheduler.createAsyncTimer(callback, ruleCooldown);
@@ -149,17 +148,17 @@ public class ChatResponder extends Worker<String, ChatResponder.ChannelMessage> 
 	private void applyPlayerCooldown(String player)
 	{
 		if (playerCooldown > 0)
-			playerCooldowns.put(player, new Date().getTime() + (playerCooldown * 1000));
+			playerCooldowns.put(player, new Date().getTime() + (playerCooldown * 1000L));
 	}
 
 	private final IScheduler scheduler;
 	private final ChatTriggerRepository chatTriggerRepository;
-	private final ConcurrentHashMap<String, Long> playerCooldowns = new ConcurrentHashMap<String, Long>();
-	private final ArrayList<IChatResponseTrigger> activeTriggers = new ArrayList<IChatResponseTrigger>();
+	private final ConcurrentHashMap<String, Long> playerCooldowns = new ConcurrentHashMap<>();
+	private final ArrayList<IChatResponseTrigger> activeTriggers = new ArrayList<>();
 	private final Speech speech;
 	private final IDebug debugger;
 	private final IConsole console;
-	private final List<IChatResponseTrigger> staticResponders = new ArrayList<IChatResponseTrigger>();
+	private final List<IChatResponseTrigger> staticResponders = new ArrayList<>();
 	private final IChannelManager manager;
 	private int ruleCooldown;
 	private int playerCooldown;

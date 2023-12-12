@@ -132,17 +132,17 @@ public class ChatResponder extends Worker<String, ChatResponder.ChannelMessage> 
 
 	private void applyRuleCooldown(final IChatResponseTrigger rule)
 	{
-		if (ruleCooldown > 0)
+		if (ruleCooldown <= 0)
+			return;
+
+		debugger.debugFine("Putting rule on cooldown");
+		Runnable callback = () ->
 		{
-			debugger.debugFine("Putting rule on cooldown");
-			Runnable callback = () ->
-			{
-				if (!activeTriggers.contains(rule))
-					activeTriggers.add(rule);
-			};
-			activeTriggers.remove(rule);
-			scheduler.createAsyncTimer(callback, ruleCooldown);
-		}
+			if (!activeTriggers.contains(rule))
+				activeTriggers.add(rule);
+		};
+		activeTriggers.remove(rule);
+		scheduler.createAsyncTimer(callback, ruleCooldown);
 	}
 
 	private void applyPlayerCooldown(String player)

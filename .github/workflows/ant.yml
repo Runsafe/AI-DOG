@@ -24,7 +24,7 @@ jobs:
           mkdir -p /home/runner/work/Framework/lastStable/archive/build/jar
           mkdir -p /home/runner/work/nChat/lastStable/archive/build/jar
           curl https://jenkins.runsafe.no/job/Framework/lastSuccessfulBuild/artifact/build/jar/framework.jar -o ../../Framework/lastStable/archive/build/jar/framework.jar
-          curl https://jenkins.runsafe.no/job/nChat/lastSuccessfulBuild/artifact/build/jar/nChat.jar -o ../../nChat/lastStable/archive/build/jar
+          curl https://jenkins.runsafe.no/job/nChat/lastSuccessfulBuild/artifact/build/jar/nChat.jar -o ../../nChat/lastStable/archive/build/jar/nChat.jar
           cd /home/runner/work/Framework
           git clone https://github.com/Runsafe/Framework.git
           mv Framework workspace

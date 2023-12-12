@@ -23,21 +23,17 @@ public class Insult extends ChatResponderRule implements IConfigurationChanged
 			playerHits.put(player, 0);
 			return String.format("Well, this is out of the blue! You are just a %s, %s.", createInsult(), player);
 		}
-		else
-		{
-			int hits = playerHits.get(player);
 
-			if (hits == 4)
-			{
-				playerHits.put(player, 0);
-				return String.format("Getting real tired of your shit, %s.", player);
-			}
-			else
-			{
-				playerHits.put(player, playerHits.get(player) + 1);
-				return String.format("Well, %s, you are just a %s.", player, createInsult());
-			}
+		int hits = playerHits.get(player);
+
+		if (hits == 4)
+		{
+			playerHits.put(player, 0);
+			return String.format("Getting real tired of your shit, %s.", player);
 		}
+
+		playerHits.put(player, playerHits.get(player) + 1);
+		return String.format("Well, %s, you are just a %s.", player, createInsult());
 	}
 
 	@Override
@@ -45,10 +41,9 @@ public class Insult extends ChatResponderRule implements IConfigurationChanged
 	{
 		this.insultTiers.clear();
 
-		List<String> sortOrder = new ArrayList<String>();
 		Map<String, List<String>> insults = configuration.getConfigSectionsAsList("insults");
 
-		sortOrder.addAll(insults.keySet());
+		List<String> sortOrder = new ArrayList<>(insults.keySet());
 		Collections.sort(sortOrder);
 
 		for (String tier : sortOrder)
@@ -65,7 +60,7 @@ public class Insult extends ChatResponderRule implements IConfigurationChanged
 		return insult.toString().trim();
 	}
 
-	private final List<List<String>> insultTiers = new ArrayList<List<String>>();
+	private final List<List<String>> insultTiers = new ArrayList<>();
 	private final Random random = new Random();
-	private final HashMap<String, Integer> playerHits = new HashMap<String, Integer>();
+	private final HashMap<String, Integer> playerHits = new HashMap<>();
 }

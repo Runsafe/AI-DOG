@@ -39,5 +39,5 @@ public class Where extends ChatResponderRule implements IConfigurationChanged
 	}
 
 	private final IServer server;
-	private Map<String, String> worldMessages = new HashMap<String, String>();
+	private Map<String, String> worldMessages = new HashMap<>();
 }

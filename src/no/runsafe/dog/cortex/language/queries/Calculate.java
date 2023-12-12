@@ -25,7 +25,7 @@ public class Calculate extends ChatResponderRule
 			ScriptEngine engine = manager.getEngineByName("JavaScript");
 			Object answer = engine.eval(maths);
 
-			return String.format("That would be %s, %s.", String.valueOf(answer), player);
+			return String.format("That would be %s, %s.", answer, player);
 		}
 		catch (ScriptException e)
 		{

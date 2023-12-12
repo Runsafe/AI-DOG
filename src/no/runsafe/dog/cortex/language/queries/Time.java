@@ -2,10 +2,10 @@ package no.runsafe.dog.cortex.language.queries;
 
 import no.runsafe.dog.cortex.language.ChatResponderRule;
 import no.runsafe.framework.api.IServer;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 
-import java.util.TimeZone;
+import java.time.DateTimeException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.regex.Matcher;
 
 public class Time extends ChatResponderRule
@@ -19,12 +19,19 @@ public class Time extends ChatResponderRule
 	public String getResponse(String player, Matcher message)
 	{
 		String timezone = message.group(1);
-		DateTime now = DateTime.now(DateTimeZone.forTimeZone(TimeZone.getTimeZone(timezone)));
-		return String.format(
-				"The time is %02d:%02d in %s.",
-				Integer.parseInt(now.hourOfDay().getAsText()),
-				Integer.parseInt(now.minuteOfHour().getAsText()),
-				timezone
-		);
+		if (timezone == null)
+			return null;
+
+		ZonedDateTime now;
+		try
+		{
+			now = ZonedDateTime.now(ZoneId.of(timezone));
+		}
+		catch(DateTimeException e)
+		{
+			return null; // Invalid time zone
+		}
+
+		return String.format("The time is %02d:%02d in %s.", now.getHour(), now.getMinute(), timezone);
 	}
 }

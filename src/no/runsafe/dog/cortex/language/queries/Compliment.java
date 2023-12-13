@@ -1,9 +1,11 @@
 package no.runsafe.dog.cortex.language.queries;
 
 import no.runsafe.dog.cortex.language.ChatResponderRule;
+import no.runsafe.dog.events.DogUncomfortableEvent;
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
+import no.runsafe.framework.api.player.IPlayer;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -13,6 +15,7 @@ public class Compliment extends ChatResponderRule implements IConfigurationChang
 	public Compliment(IServer server)
 	{
 		super("(?i).*(pretty|beautiful|awesome)\\s+dog", null, null, null, null, server);
+		this.server = server;
 	}
 
 	@Override
@@ -28,6 +31,10 @@ public class Compliment extends ChatResponderRule implements IConfigurationChang
 
 		if (hits == 4)
 		{
+			IPlayer weirdo = server.getPlayerExact(player);
+			if (weirdo != null)
+				new DogUncomfortableEvent(weirdo).Fire();
+
 			playerHits.put(player, 0);
 			return String.format("%s, you are a really nice friend but we need to see other people.", player);
 		}
@@ -62,4 +69,5 @@ public class Compliment extends ChatResponderRule implements IConfigurationChang
 	private final List<List<String>> complimentTiers = new ArrayList<>();
 	private final Random random = new Random();
 	private final HashMap<String, Integer> playerHits = new HashMap<>();
+	private final IServer server;
 }

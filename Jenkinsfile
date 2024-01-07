@@ -13,10 +13,7 @@ pipeline {
         ant 'Default'
         jdk 'Default'
       }
-      steps {
-        buildPluginWithAnt env.plugin, 'nChat', 'build/jar/*.jar'
-        archivePlugin '', , "${env.plugin}.tar"
-      }
+      steps { buildPluginWithAnt env.plugin, 'nChat', 'build/jar/*.jar' }
     }
     stage('Deploy to test server') {
       agent { label 'server4' }

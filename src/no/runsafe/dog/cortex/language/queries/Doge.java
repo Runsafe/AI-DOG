@@ -20,10 +20,8 @@ public class Doge extends ChatResponderRule
 	public String getResponse(String player, Matcher message)
 	{
 		boolean hasWow = false;
-		List<String> phraseBin = new ArrayList<String>();
-		phraseBin.addAll(phrases);
-
-		List<String> responses = new ArrayList<String>(0);
+		List<String> phraseBin = new ArrayList<>(phrases);
+		List<String> responses = new ArrayList<>(0);
 		String[] words = message.group(1).trim().toLowerCase().replaceAll("[^a-zA-Z0-9\\s]", "").split("\\s+");
 
 		for (String word : words)
@@ -62,8 +60,8 @@ public class Doge extends ChatResponderRule
 	}
 
 	private final Random random = new Random();
-	private final static List<String> phrases = new ArrayList<String>();
-	private final static List<String> excludedWords = new ArrayList<String>(6);
+	private final static List<String> phrases = new ArrayList<>();
+	private final static List<String> excludedWords = new ArrayList<>(6);
 
 	static
 	{

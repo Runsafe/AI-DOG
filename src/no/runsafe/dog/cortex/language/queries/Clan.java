@@ -19,23 +19,23 @@ public class Clan extends ChatResponderRule
 	public String getResponse(String player, Matcher message)
 	{
 		IPlayer targetPlayer = server.getPlayerExact(message.group(2));
-		if (targetPlayer != null)
-		{
-			Map<String, String> data = targetPlayer.getData();
-			if (data.containsKey("runsafe.clans.clan"))
-			{
-				String clanName = data.get("runsafe.clans.clan");
+		if (targetPlayer == null)
+			return null;
 
-				if (!clanName.equals("None"))
-					return String.format(
-							"%s has been a member of the %s clan for %s.",
-							targetPlayer.getPrettyName(),
-							data.get("runsafe.clans.clan"),
-							data.get("runsafe.clans.joined")
-					);
-			}
-		}
-		return null;
+		Map<String, String> data = targetPlayer.getData();
+		if (!data.containsKey("runsafe.clans.clan"))
+			return null;
+
+		String clanName = data.get("runsafe.clans.clan");
+		if (clanName.equals("None"))
+			return null;
+
+		return String.format(
+			"%s has been a member of the %s clan for %s.",
+			targetPlayer.getPrettyName(),
+			data.get("runsafe.clans.clan"),
+			data.get("runsafe.clans.joined")
+		);
 	}
 
 	private final IServer server;

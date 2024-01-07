@@ -4,5 +4,5 @@ import no.runsafe.framework.api.IConfiguration;
 
 public interface Subsystem
 {
-	public void reload(IConfiguration configuration);
+	void reload(IConfiguration configuration);
 }

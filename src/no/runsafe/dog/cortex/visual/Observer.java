@@ -17,7 +17,7 @@ public class Observer implements Subsystem, IPlayerInteractEvent
 	{
 		this.speech = speech;
 		this.playerChecks = playerChecks;
-		blockedMessages = new HashMap<String, String>();
+		blockedMessages = new HashMap<>();
 	}
 
 	@Override
@@ -33,11 +33,11 @@ public class Observer implements Subsystem, IPlayerInteractEvent
 	public void OnPlayerInteractEvent(RunsafePlayerInteractEvent event)
 	{
 		IPlayer player = event.getPlayer();
-		if (blockedMessages.containsKey(player.getWorldName()) && playerChecks.isGuest(player) && shouldNotify(player))
-		{
-			speech.Whisper(player, blockedMessages.get(player.getWorldName()));
-			isNotified(player);
-		}
+		if (!blockedMessages.containsKey(player.getWorldName()) || !playerChecks.isGuest(player) || !shouldNotify(player))
+			return;
+
+		speech.Whisper(player, blockedMessages.get(player.getWorldName()));
+		isNotified(player);
 	}
 
 	private boolean shouldNotify(IPlayer player)
@@ -49,7 +49,7 @@ public class Observer implements Subsystem, IPlayerInteractEvent
 	private void isNotified(IPlayer player)
 	{
 		if (!notifiedPlayers.containsKey(player.getWorldName()))
-			notifiedPlayers.put(player.getWorldName(), new ArrayList<String>());
+			notifiedPlayers.put(player.getWorldName(), new ArrayList<>());
 		if (!notifiedPlayers.get(player.getWorldName()).contains(player.getName()))
 			notifiedPlayers.get(player.getWorldName()).add(player.getName());
 	}
@@ -57,5 +57,5 @@ public class Observer implements Subsystem, IPlayerInteractEvent
 	private final PlayerChecks playerChecks;
 	private final Speech speech;
 	private final HashMap<String, String> blockedMessages;
-	private final HashMap<String, ArrayList<String>> notifiedPlayers = new HashMap<String, ArrayList<String>>();
+	private final HashMap<String, ArrayList<String>> notifiedPlayers = new HashMap<>();
 }

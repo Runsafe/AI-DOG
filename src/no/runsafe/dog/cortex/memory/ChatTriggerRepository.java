@@ -60,7 +60,7 @@ public class ChatTriggerRepository extends Repository
 		if (data.isEmpty())
 			return null;
 
-		ArrayList<ChatResponderRule> rules = new ArrayList<ChatResponderRule>();
+		ArrayList<ChatResponderRule> rules = new ArrayList<>();
 		for (IRow row : data)
 		{
 			try

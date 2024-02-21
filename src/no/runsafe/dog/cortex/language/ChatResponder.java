@@ -25,8 +25,8 @@ public class ChatResponder extends Worker<String, ChatResponder.ChannelMessage> 
 {
 	public static class ChannelMessage
 	{
-		IChatChannel channel;
-		String message;
+		final IChatChannel channel;
+		final String message;
 
 		public ChannelMessage(IChatChannel channel, String message)
 		{

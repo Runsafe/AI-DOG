@@ -22,7 +22,8 @@ public class Clan extends ChatResponderRule
 		if (targetPlayer == null)
 			return null;
 
-		Map<String, String> data = targetPlayer.getData();
+		Map<String, String> data = targetPlayer.getData(targetPlayer, "runsafe.clans.");
+
 		if (!data.containsKey("runsafe.clans.clan"))
 			return null;
 
